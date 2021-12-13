@@ -12,11 +12,21 @@ code {
     monospace;
 }
 
+@keyframes movement {
+  from {
+    right: -10vw;
+  }
+  to {
+    right: 100vw;
+  }
+}
+
 .App {
   position: relative;
   width: 100vw;
   height: 100vh;
   background-color: #282c34;
+  overflow: hidden;
 
   .doge {
     position: absolute;
@@ -28,7 +38,11 @@ code {
   .stars {
     position: absolute;
     top: 12vh;
-    right: 0vh;
+    right: -10vw;
     height: 15vh;
+    animation-timing-function: linear;
+    animation-duration: 2s;
+    animation-name: movement;
+    animation-iteration-count: infinite;
   }
 }

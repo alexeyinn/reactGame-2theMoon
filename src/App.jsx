@@ -1,5 +1,3 @@
-//import doge from "../public/img/doge.svg";
-
 function App() {
   return (
     <div className="App">
