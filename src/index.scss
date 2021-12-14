@@ -28,11 +28,31 @@ code {
   background-color: #282c34;
   overflow: hidden;
 
+  .flying {
+    position: absolute;
+    right: -10vw;
+    animation-timing-function: linear;
+    animation-duration: 3s;
+    animation-name: movement;
+    animation-iteration-count: infinite;
+  }
+
+  .stars {
+    top: 12vh;
+    height: 15vh;
+  }
+
+  .platform {
+    width: 20vw;
+    bottom: 10vh;
+  }
+
   .doge {
     position: absolute;
     height: 15vh;
     bottom: 0vh;
     left: 8vw;
+    z-index: 1;
     transition: bottom 0.5s linear;
   }
 
@@ -42,16 +62,5 @@ code {
     bottom: 25vh;
     left: 8vw;
     transition: bottom 1s;
-  }
-
-  .stars {
-    position: absolute;
-    top: 12vh;
-    right: -10vw;
-    height: 15vh;
-    animation-timing-function: linear;
-    animation-duration: 2s;
-    animation-name: movement;
-    animation-iteration-count: infinite;
   }
 }

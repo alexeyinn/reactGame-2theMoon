@@ -9,7 +9,7 @@ function App() {
 
   const onJump = () => {
     setInJump(true);
-    setTimeout(fromJump, 800);
+    setTimeout(fromJump, 700);
   };
 
   return (
@@ -19,7 +19,8 @@ function App() {
         src="img/doge.svg"
         alt="doge"
       />
-      <img className="stars" src="img/stars.svg" alt="stars" />
+      <img className="stars flying" src="img/stars.svg" alt="stars" />
+      <img className="platform flying" src="img/platform.svg" alt="platform" />
     </div>
   );
 }
