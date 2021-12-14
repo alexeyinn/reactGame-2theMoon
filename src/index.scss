@@ -31,8 +31,17 @@ code {
   .doge {
     position: absolute;
     height: 15vh;
-    bottom: 0;
+    bottom: 0vh;
     left: 8vw;
+    transition: bottom 0.5s linear;
+  }
+
+  .jump {
+    position: absolute;
+    height: 15vh;
+    bottom: 25vh;
+    left: 8vw;
+    transition: bottom 1s;
   }
 
   .stars {

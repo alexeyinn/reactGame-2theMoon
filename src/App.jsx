@@ -1,7 +1,24 @@
+import { useState } from "react";
+
 function App() {
+  const [inJump, setInJump] = useState(false);
+
+  const fromJump = () => {
+    setInJump(false);
+  };
+
+  const onJump = () => {
+    setInJump(true);
+    setTimeout(fromJump, 800);
+  };
+
   return (
-    <div className="App">
-      <img className="doge" src="img/doge.svg" alt="doge" />
+    <div onClick={onJump} className="App">
+      <img
+        className={"doge" + (inJump ? " jump" : "")}
+        src="img/doge.svg"
+        alt="doge"
+      />
       <img className="stars" src="img/stars.svg" alt="stars" />
     </div>
   );
