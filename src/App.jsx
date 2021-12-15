@@ -1,12 +1,14 @@
 import { useState, useRef, useEffect } from "react";
 
 function App() {
-  const [inJump, setInJump] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [inJump, setInJump] = useState(false);
+  const [isFalling, setIsFalling] = useState(false);
   const [onPlatform, setOnPlatform] = useState({});
 
   const fromJump = () => {
     setInJump(false);
+    setIsFalling(true);
   };
 
   const onJump = () => {
@@ -23,6 +25,7 @@ function App() {
     dogePosition = dogeElem.current.getBoundingClientRect();
     platformPosition = platformElem.current.getBoundingClientRect();
     if (
+      isFalling === true &&
       platformPosition.left <= dogePosition.right &&
       dogePosition.right <= platformPosition.right &&
       dogePosition.bottom >= platformPosition.top &&
@@ -35,6 +38,7 @@ function App() {
         bottom: px + "px",
         transition: 0.1 + "s",
       });
+      setIsFalling(false);
     }
   };
 
