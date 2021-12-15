@@ -1,10 +1,12 @@
 import { useState, useRef, useEffect } from "react";
+import Stars from "./components/Stars";
 
 function App() {
   const [isLoaded, setIsLoaded] = useState(false);
   const [inJump, setInJump] = useState(false);
   const [isFalling, setIsFalling] = useState(false);
   const [onPlatform, setOnPlatform] = useState({});
+  const [starsCount, setStarsCount] = useState([]);
 
   const fromJump = () => {
     setInJump(false);
@@ -13,7 +15,7 @@ function App() {
 
   const onJump = () => {
     setInJump(true);
-    setTimeout(fromJump, 700);
+    setTimeout(fromJump, 600);
   };
 
   let dogeElem = useRef();
@@ -40,17 +42,27 @@ function App() {
       });
       setIsFalling(false);
     }
+    if (dogePosition.left > platformPosition.right) {
+      setOnPlatform({});
+      setIsFalling(true);
+    }
   };
 
   useEffect(() => {
     setIsLoaded(true);
     dogeElem.current = document.querySelector(".doge");
     platformElem.current = document.querySelector(".platform");
-    console.log(getComputedStyle(dogeElem.current).bottom);
   }, []);
 
   if (isLoaded === true) {
     setInterval(checkOnPlatform, 1);
+  }
+
+  if (starsCount.length <= 2) {
+    setTimeout(
+      () => setStarsCount([...starsCount, starsCount.length * 24]),
+      1000
+    );
   }
 
   return (
@@ -62,7 +74,9 @@ function App() {
         src="img/doge.svg"
         alt="doge"
       />
-      <img className="stars flying" src="img/stars.svg" alt="stars" />
+      {starsCount.map((item, index) => (
+        <Stars position={item} key={index} />
+      ))}
       <img
         ref={platformElem}
         className="platform flying"
