@@ -19,8 +19,10 @@ function App() {
     }
   }, [dispatch, starsCount]);
 
+  // Собака прыгает
   const onJump = useCallback(() => {
     dispatch(setInJump(true));
+    dispatch(setOnPlatform({}));
     setTimeout(() => {
       dispatch(setInJump(false));
     }, 600);
@@ -46,6 +48,7 @@ function App() {
       doge.bottom >= platform.top &&
       doge.bottom <= platform.top + 10
     ) {
+      // Собака запрыгнула
       dispatch(setInJump(true));
       let platformY = getComputedStyle(platformRef.current).bottom;
       let px = +platformY.match(/\d+/)[0] + 40;
@@ -57,13 +60,12 @@ function App() {
         })
       );
     }
-    // Собака падает с платформы
     if (
       toUp.current === true &&
       doge.left > platform.right &&
-      doge.bottom >= platform.top &&
-      doge.bottom <= platform.top + 20
+      doge.bottom >= platform.top
     ) {
+      // Собака падает с платформы
       dispatch(setInJump(false));
       dispatch(setOnPlatform({}));
     }
