@@ -1,9 +1,11 @@
-export const setInJump = () => ({
+export const setInJump = (doingJump) => ({
   type: "SET_IN_JUMP",
+  payload: doingJump,
 });
 
-export const setIsFalling = () => ({
+export const setIsFalling = (startsFalling) => ({
   type: "SET_IS_FALLING",
+  payload: startsFalling,
 });
 
 export const setOnPlatform = (floorPosition) => ({

@@ -1,6 +1,6 @@
 const initialState = {
   inJump: false,
-  isFalling: false,
+  isFalling: true,
   onPlatform: {},
 };
 
@@ -9,13 +9,13 @@ const doge = (state = initialState, action) => {
     case "SET_IN_JUMP": {
       return {
         ...state,
-        inJump: !state.inJump,
+        inJump: action.payload,
       };
     }
     case "SET_IS_FALLING": {
       return {
         ...state,
-        isFalling: !state.isFalling,
+        isFalling: action.payload,
       };
     }
     case "SET_ON_PLATFORM": {

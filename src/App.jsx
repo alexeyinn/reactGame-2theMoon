@@ -22,10 +22,10 @@ function App() {
   }, [dispatch, starsCount]);
 
   const onJump = () => {
-    dispatch(setInJump());
+    dispatch(setInJump(true));
     setTimeout(() => {
-      dispatch(setInJump());
-      dispatch(setIsFalling());
+      dispatch(setInJump(false));
+      dispatch(setIsFalling(true));
     }, 600);
   };
 
@@ -44,6 +44,7 @@ function App() {
       dogePosition.bottom >= platformPosition.top &&
       dogePosition.bottom <= platformPosition.top + 10
     ) {
+      dispatch(setIsFalling(false));
       let platformY = getComputedStyle(platformElem.current).bottom;
       let px = +platformY.match(/\d+/)[0] + 40;
 
@@ -53,12 +54,16 @@ function App() {
           transition: 0.1 + "s",
         })
       );
-      setIsFalling(false);
     }
     // Собака падает с платформы
-    if (dogePosition.left > platformPosition.right) {
+    if (
+      isFalling === false &&
+      dogePosition.left > platformPosition.right &&
+      dogePosition.bottom >= platformPosition.top &&
+      dogePosition.bottom <= platformPosition.top + 20
+    ) {
+      dispatch(setIsFalling(true));
       dispatch(setOnPlatform({}));
-      dispatch(setIsFalling());
     }
   };
 
