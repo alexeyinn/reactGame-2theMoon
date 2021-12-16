@@ -1,21 +1,32 @@
-import { useState, useRef, useEffect } from "react";
-import Stars from "./components/Stars";
+import { useRef, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { setIsLoaded, setStarsCount } from "./redux/actions/environment";
+import { setInJump, setIsFalling, setOnPlatform } from "./redux/actions/doge";
+
+import { Stars, Platform, Doge } from "./components";
 
 function App() {
-  const [isLoaded, setIsLoaded] = useState(false);
-  const [inJump, setInJump] = useState(false);
-  const [isFalling, setIsFalling] = useState(false);
-  const [onPlatform, setOnPlatform] = useState({});
-  const [starsCount, setStarsCount] = useState([]);
+  const dispatch = useDispatch();
+  const { isLoaded, starsCount } = useSelector(
+    ({ environment }) => environment
+  );
+  const { isFalling } = useSelector(({ doge }) => doge);
 
-  const fromJump = () => {
-    setInJump(false);
-    setIsFalling(true);
-  };
+  useEffect(() => {
+    if (starsCount.length <= 2) {
+      setTimeout(() => {
+        dispatch(setStarsCount());
+      }, 1000);
+    }
+  }, [dispatch, starsCount]);
 
   const onJump = () => {
-    setInJump(true);
-    setTimeout(fromJump, 600);
+    dispatch(setInJump());
+    setTimeout(() => {
+      dispatch(setInJump());
+      dispatch(setIsFalling());
+    }, 600);
   };
 
   let dogeElem = useRef();
@@ -36,53 +47,38 @@ function App() {
       let platformY = getComputedStyle(platformElem.current).bottom;
       let px = +platformY.match(/\d+/)[0] + 40;
 
-      setOnPlatform({
-        bottom: px + "px",
-        transition: 0.1 + "s",
-      });
+      dispatch(
+        setOnPlatform({
+          bottom: px + "px",
+          transition: 0.1 + "s",
+        })
+      );
       setIsFalling(false);
     }
+    // Собака падает с платформы
     if (dogePosition.left > platformPosition.right) {
-      setOnPlatform({});
-      setIsFalling(true);
+      dispatch(setOnPlatform({}));
+      dispatch(setIsFalling());
     }
   };
 
   useEffect(() => {
-    setIsLoaded(true);
+    dispatch(setIsLoaded());
     dogeElem.current = document.querySelector(".doge");
     platformElem.current = document.querySelector(".platform");
-  }, []);
+  }, [dispatch]);
 
   if (isLoaded === true) {
-    setInterval(checkOnPlatform, 1);
-  }
-
-  if (starsCount.length <= 2) {
-    setTimeout(
-      () => setStarsCount([...starsCount, starsCount.length * 24]),
-      1000
-    );
+    setInterval(checkOnPlatform, 70);
   }
 
   return (
     <div onClick={onJump} className="App">
-      <img
-        ref={dogeElem}
-        style={onPlatform}
-        className={"doge" + (inJump ? " jump" : "")}
-        src="img/doge.svg"
-        alt="doge"
-      />
+      <Doge ref={dogeElem} />
       {starsCount.map((item, index) => (
         <Stars position={item} key={index} />
       ))}
-      <img
-        ref={platformElem}
-        className="platform flying"
-        src="img/platform.svg"
-        alt="platform"
-      />
+      <Platform ref={platformElem} />
     </div>
   );
 }

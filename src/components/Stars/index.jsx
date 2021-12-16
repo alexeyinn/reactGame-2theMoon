@@ -1,3 +1,5 @@
+import "./style.scss";
+
 function Stars(props) {
   let starsStyle = {
     top: props.position + "vh",
