@@ -1,17 +1,15 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setIsLoaded, setStarsCount } from "./redux/actions/environment";
-import { setInJump, setIsFalling, setOnPlatform } from "./redux/actions/doge";
+import { setStarsCount } from "./redux/actions/environment";
+import { setInJump, setOnPlatform } from "./redux/actions/doge";
 
 import { Stars, Platform, Doge } from "./components";
 
 function App() {
   const dispatch = useDispatch();
-  const { isLoaded, starsCount } = useSelector(
-    ({ environment }) => environment
-  );
-  const { isFalling } = useSelector(({ doge }) => doge);
+  const { starsCount } = useSelector(({ environment }) => environment);
+  const { inJump } = useSelector(({ doge }) => doge);
 
   useEffect(() => {
     if (starsCount.length <= 2) {
@@ -21,31 +19,35 @@ function App() {
     }
   }, [dispatch, starsCount]);
 
-  const onJump = () => {
+  const onJump = useCallback(() => {
     dispatch(setInJump(true));
     setTimeout(() => {
       dispatch(setInJump(false));
-      dispatch(setIsFalling(true));
     }, 600);
-  };
+  }, [dispatch]);
 
-  let dogeElem = useRef();
-  let dogePosition;
-  let platformElem = useRef();
-  let platformPosition;
+  let dogeRef = useRef();
+  let dogePositionRef = useRef();
+  let platformRef = useRef();
+  let platformPositionRef = useRef();
+  let toUp = useRef();
+  toUp.current = inJump;
 
-  const checkOnPlatform = () => {
-    dogePosition = dogeElem.current.getBoundingClientRect();
-    platformPosition = platformElem.current.getBoundingClientRect();
+  const checkOnPlatform = useCallback(() => {
+    dogePositionRef.current = dogeRef.current.getBoundingClientRect();
+    platformPositionRef.current = platformRef.current.getBoundingClientRect();
+    let doge = dogePositionRef.current;
+    let platform = platformPositionRef.current;
+
     if (
-      isFalling === true &&
-      platformPosition.left <= dogePosition.right &&
-      dogePosition.right <= platformPosition.right &&
-      dogePosition.bottom >= platformPosition.top &&
-      dogePosition.bottom <= platformPosition.top + 10
+      toUp.current === false &&
+      platform.left <= doge.right &&
+      doge.right <= platform.right &&
+      doge.bottom >= platform.top &&
+      doge.bottom <= platform.top + 10
     ) {
-      dispatch(setIsFalling(false));
-      let platformY = getComputedStyle(platformElem.current).bottom;
+      dispatch(setInJump(true));
+      let platformY = getComputedStyle(platformRef.current).bottom;
       let px = +platformY.match(/\d+/)[0] + 40;
 
       dispatch(
@@ -57,33 +59,29 @@ function App() {
     }
     // Собака падает с платформы
     if (
-      isFalling === false &&
-      dogePosition.left > platformPosition.right &&
-      dogePosition.bottom >= platformPosition.top &&
-      dogePosition.bottom <= platformPosition.top + 20
+      toUp.current === true &&
+      doge.left > platform.right &&
+      doge.bottom >= platform.top &&
+      doge.bottom <= platform.top + 20
     ) {
-      dispatch(setIsFalling(true));
+      dispatch(setInJump(false));
       dispatch(setOnPlatform({}));
     }
-  };
+  }, [dispatch, dogePositionRef, platformPositionRef]);
 
   useEffect(() => {
-    dispatch(setIsLoaded());
-    dogeElem.current = document.querySelector(".doge");
-    platformElem.current = document.querySelector(".platform");
-  }, [dispatch]);
-
-  if (isLoaded === true) {
-    setInterval(checkOnPlatform, 70);
-  }
+    dogeRef.current = document.querySelector(".doge");
+    platformRef.current = document.querySelector(".platform");
+    setInterval(checkOnPlatform, 1);
+  }, [checkOnPlatform]);
 
   return (
     <div onClick={onJump} className="App">
-      <Doge ref={dogeElem} />
+      <Doge />
       {starsCount.map((item, index) => (
         <Stars position={item} key={index} />
       ))}
-      <Platform ref={platformElem} />
+      <Platform />
     </div>
   );
 }
