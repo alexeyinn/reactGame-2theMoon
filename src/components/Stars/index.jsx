@@ -1,6 +1,8 @@
+import React from "react";
+
 import "./style.scss";
 
-function Stars(props) {
+const Stars = React.memo((props) => {
   let starsStyle = {
     top: props.position + "vh",
   };
@@ -13,6 +15,6 @@ function Stars(props) {
       alt="stars"
     />
   );
-}
+});
 
 export default Stars;

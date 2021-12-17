@@ -44,7 +44,7 @@ function App() {
     if (
       toUp.current === false &&
       platform.left <= doge.right &&
-      doge.right <= platform.right &&
+      (doge.right <= platform.right || doge.left <= platform.right) &&
       doge.bottom >= platform.top &&
       doge.bottom <= platform.top + 10
     ) {
@@ -52,7 +52,7 @@ function App() {
       dispatch(setInJump(true));
       let platformY = getComputedStyle(platformRef.current).bottom;
       let px = +platformY.match(/\d+/)[0] + 40;
-
+      // Положение собаки фиксируется на платформе
       dispatch(
         setOnPlatform({
           bottom: px + "px",
@@ -74,7 +74,7 @@ function App() {
   useEffect(() => {
     dogeRef.current = document.querySelector(".doge");
     platformRef.current = document.querySelector(".platform");
-    setInterval(checkOnPlatform, 1);
+    setInterval(checkOnPlatform, 20);
   }, [checkOnPlatform]);
 
   return (
