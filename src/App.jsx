@@ -9,7 +9,7 @@ import { Stars, Platform, Doge } from "./components";
 function App() {
   const dispatch = useDispatch();
   const { starsCount } = useSelector(({ environment }) => environment);
-  const { inJump } = useSelector(({ doge }) => doge);
+  const { inJump, onPlatform } = useSelector(({ doge }) => doge);
 
   useEffect(() => {
     if (starsCount.length <= 2) {
@@ -32,8 +32,10 @@ function App() {
   let dogePositionRef = useRef();
   let platformRef = useRef();
   let platformPositionRef = useRef();
-  let toUp = useRef();
-  toUp.current = inJump;
+  let inJumpRef = useRef();
+  inJumpRef.current = inJump;
+  let onPlatformRef = useRef();
+  onPlatformRef.current = onPlatform;
 
   const checkOnPlatform = useCallback(() => {
     dogePositionRef.current = dogeRef.current.getBoundingClientRect();
@@ -42,7 +44,7 @@ function App() {
     let platform = platformPositionRef.current;
 
     if (
-      toUp.current === false &&
+      inJumpRef.current === false &&
       platform.left <= doge.right &&
       (doge.right <= platform.right || doge.left <= platform.right) &&
       doge.bottom >= platform.top &&
@@ -61,9 +63,10 @@ function App() {
       );
     }
     if (
-      toUp.current === true &&
+      inJumpRef.current === true &&
+      onPlatformRef.current.bottom !== undefined &&
       doge.left > platform.right &&
-      doge.bottom >= platform.top
+      doge.bottom <= platform.bottom
     ) {
       // Собака падает с платформы
       dispatch(setInJump(false));
