@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setStarsCount, setPlatformCount } from "./redux/actions/environment";
-import { setInJump, setOnPlatform, setDogeToUp } from "./redux/actions/doge";
+import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
 
 import { Stars, Platform, Doge } from "./components";
 
@@ -11,7 +11,7 @@ function App() {
   const { starsCount, platformCount } = useSelector(
     ({ environment }) => environment
   );
-  const { inJump, onPlatform } = useSelector(({ doge }) => doge);
+  const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
 
   useEffect(() => {
     dogeRef.current = document.querySelector(".doge");
@@ -22,23 +22,23 @@ function App() {
     }
   }, [dispatch, starsCount]);
 
-  // Собака прыгает
+  // --- Собака прыгает
   const onJump = useCallback(() => {
-    dispatch(setInJump(true));
-    dispatch(setOnPlatform({}));
-    dispatch(setDogeToUp(getComputedStyle(dogeRef.current).bottom));
+    dispatch(
+      setDogePosition([getComputedStyle(dogeRef.current).bottom, 300, 1])
+    );
+    dispatch(setOnPlatform(false));
     setTimeout(() => {
-      dispatch(setInJump(false));
-      dispatch(setDogeToUp({}));
+      dispatch(setDogePosition({}));
     }, 600);
   }, [dispatch]);
-  // TODO Объеденить состояние inJump, onPlatform, и dogeToUp
+
   let dogeRef = useRef();
   let dogePositionRef = useRef();
   let platformRef = useRef();
   let platformPositionRef = useRef();
-  let inJumpRef = useRef();
-  inJumpRef.current = inJump;
+  let dogepositionRef = useRef();
+  dogepositionRef.current = dogePosition;
   let onPlatformRef = useRef();
   onPlatformRef.current = onPlatform;
 
@@ -50,34 +50,28 @@ function App() {
       let platform = platformPositionRef.current;
 
       if (
-        inJumpRef.current === false &&
+        Object.keys(dogepositionRef.current).length === 0 &&
         platform.left <= doge.right &&
         (doge.right <= platform.right || doge.left <= platform.right) &&
         doge.bottom >= platform.top &&
         doge.bottom <= platform.top + 10
       ) {
-        // TODO вынести логику в редюсер
-        // Собака запрыгнула
-        dispatch(setInJump(true));
-        let platformY = getComputedStyle(platformBorder).bottom;
-        let px = +platformY.match(/\d+/)[0] + 40;
-        // Положение собаки фиксируется на платформе
+        // --- Собака запрыгивает на платформу
+        dispatch(setOnPlatform(true));
         dispatch(
-          setOnPlatform({
-            bottom: px + "px",
-            transition: 0.1 + "s",
-          })
+          setDogePosition([getComputedStyle(platformBorder).bottom, 40, 0.1])
         );
       }
+
       if (
-        inJumpRef.current === true &&
-        onPlatformRef.current.bottom !== undefined &&
+        onPlatformRef.current === true &&
+        dogepositionRef.current.bottom !== undefined &&
         doge.left > platform.right &&
         doge.bottom <= platform.bottom
       ) {
-        // Собака падает с платформы
-        dispatch(setInJump(false));
-        dispatch(setOnPlatform({}));
+        // --- Собака падает с платформы
+        dispatch(setDogePosition({}));
+        dispatch(setOnPlatform(false));
       }
     },
     [dispatch, dogePositionRef, platformPositionRef]

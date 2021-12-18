@@ -1,14 +1,9 @@
-export const setInJump = (doingJump) => ({
-  type: "SET_IN_JUMP",
-  payload: doingJump,
-});
-
-export const setOnPlatform = (floorPosition) => ({
+export const setOnPlatform = (isLanding) => ({
   type: "SET_ON_PLATFORM",
-  payload: floorPosition,
+  payload: isLanding,
 });
 
-export const setDogeToUp = (dogeY) => ({
-  type: "SET_DOGE_TO_UP",
-  payload: dogeY,
+export const setDogePosition = (param) => ({
+  type: "SET_DOGE_POSITION",
+  payload: param,
 });

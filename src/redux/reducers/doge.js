@@ -1,38 +1,35 @@
 const initialState = {
-  inJump: false,
-  onPlatform: {},
-  dogeToUp: {},
+  onPlatform: false,
+  dogePosition: {},
 };
 
 const doge = (state = initialState, action) => {
   switch (action.type) {
-    case "SET_IN_JUMP": {
-      return {
-        ...state,
-        inJump: action.payload,
-      };
-    }
     case "SET_ON_PLATFORM": {
       return {
         ...state,
         onPlatform: action.payload,
       };
     }
-    case "SET_DOGE_TO_UP": {
+
+    case "SET_DOGE_POSITION": {
       let newDogePosition = {};
-      console.log(typeof action.payload);
-      if (typeof action.payload === "string") {
-        let dogeY = action.payload;
-        //match не найден
-        let px = +dogeY.match(/\d+/)[0] + 300;
-        newDogePosition = { bottom: px + "px", transition: 1 + "s" };
+
+      if (Array.isArray(action.payload)) {
+        let dogeY = action.payload[0];
+        let px = +dogeY.match(/\d+/)[0] + action.payload[1];
+        newDogePosition = {
+          bottom: px + "px",
+          transition: action.payload[2] + "s",
+        };
       }
 
       return {
         ...state,
-        dogeToUp: newDogePosition,
+        dogePosition: newDogePosition,
       };
     }
+
     default:
       return state;
   }
