@@ -1,8 +1,17 @@
 import "./style.scss";
 
-function Platform() {
+function Platform(props) {
+  let platformStyle = {
+    top: props.position + "vh",
+  };
+
   return (
-    <img className="platform flying" src="img/platform.svg" alt="platform" />
+    <img
+      style={platformStyle}
+      className="platform flying"
+      src="img/platform.svg"
+      alt="platform"
+    />
   );
 }
 

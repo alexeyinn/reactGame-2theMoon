@@ -14,7 +14,7 @@ code {
 
 @keyframes movement {
   from {
-    right: -10vw;
+    right: -17vw;
   }
   to {
     right: 100vw;
@@ -30,7 +30,6 @@ code {
 
   .flying {
     position: absolute;
-    right: -10vw;
     animation-timing-function: linear;
     animation-duration: 3s;
     animation-name: movement;

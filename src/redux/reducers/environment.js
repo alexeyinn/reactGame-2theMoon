@@ -1,5 +1,6 @@
 const initialState = {
   starsCount: [],
+  platformCount: [],
 };
 
 const environment = (state = initialState, action) => {
@@ -9,6 +10,13 @@ const environment = (state = initialState, action) => {
       return {
         ...state,
         starsCount: [...state.starsCount, starsPosition],
+      };
+    }
+    case "SET_PLATFORM_COUNT": {
+      let platformPosition = (state.platformCount.length + 1) * 27;
+      return {
+        ...state,
+        platformCount: [...state.platformCount, platformPosition],
       };
     }
     default:

@@ -1,17 +1,20 @@
 import { useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setStarsCount } from "./redux/actions/environment";
+import { setStarsCount, setPlatformCount } from "./redux/actions/environment";
 import { setInJump, setOnPlatform } from "./redux/actions/doge";
 
 import { Stars, Platform, Doge } from "./components";
 
 function App() {
   const dispatch = useDispatch();
-  const { starsCount } = useSelector(({ environment }) => environment);
+  const { starsCount, platformCount } = useSelector(
+    ({ environment }) => environment
+  );
   const { inJump, onPlatform } = useSelector(({ doge }) => doge);
 
   useEffect(() => {
+    dogeRef.current = document.querySelector(".doge");
     if (starsCount.length <= 2) {
       setTimeout(() => {
         dispatch(setStarsCount());
@@ -37,48 +40,57 @@ function App() {
   let onPlatformRef = useRef();
   onPlatformRef.current = onPlatform;
 
-  const checkOnPlatform = useCallback(() => {
-    dogePositionRef.current = dogeRef.current.getBoundingClientRect();
-    platformPositionRef.current = platformRef.current.getBoundingClientRect();
-    let doge = dogePositionRef.current;
-    let platform = platformPositionRef.current;
+  const checkOnPlatform = useCallback(
+    (platformBorder) => {
+      dogePositionRef.current = dogeRef.current.getBoundingClientRect();
+      platformPositionRef.current = platformBorder.getBoundingClientRect();
+      let doge = dogePositionRef.current;
+      let platform = platformPositionRef.current;
 
-    if (
-      inJumpRef.current === false &&
-      platform.left <= doge.right &&
-      (doge.right <= platform.right || doge.left <= platform.right) &&
-      doge.bottom >= platform.top &&
-      doge.bottom <= platform.top + 10
-    ) {
-      // Собака запрыгнула
-      dispatch(setInJump(true));
-      let platformY = getComputedStyle(platformRef.current).bottom;
-      let px = +platformY.match(/\d+/)[0] + 40;
-      // Положение собаки фиксируется на платформе
-      dispatch(
-        setOnPlatform({
-          bottom: px + "px",
-          transition: 0.1 + "s",
-        })
-      );
-    }
-    if (
-      inJumpRef.current === true &&
-      onPlatformRef.current.bottom !== undefined &&
-      doge.left > platform.right &&
-      doge.bottom <= platform.bottom
-    ) {
-      // Собака падает с платформы
-      dispatch(setInJump(false));
-      dispatch(setOnPlatform({}));
-    }
-  }, [dispatch, dogePositionRef, platformPositionRef]);
+      if (
+        inJumpRef.current === false &&
+        platform.left <= doge.right &&
+        (doge.right <= platform.right || doge.left <= platform.right) &&
+        doge.bottom >= platform.top &&
+        doge.bottom <= platform.top + 10
+      ) {
+        // Собака запрыгнула
+        dispatch(setInJump(true));
+        let platformY = getComputedStyle(platformBorder).bottom;
+        let px = +platformY.match(/\d+/)[0] + 40;
+        // Положение собаки фиксируется на платформе
+        dispatch(
+          setOnPlatform({
+            bottom: px + "px",
+            transition: 0.1 + "s",
+          })
+        );
+      }
+      if (
+        inJumpRef.current === true &&
+        onPlatformRef.current.bottom !== undefined &&
+        doge.left > platform.right &&
+        doge.bottom <= platform.bottom
+      ) {
+        // Собака падает с платформы
+        dispatch(setInJump(false));
+        dispatch(setOnPlatform({}));
+      }
+    },
+    [dispatch, dogePositionRef, platformPositionRef]
+  );
 
   useEffect(() => {
-    dogeRef.current = document.querySelector(".doge");
-    platformRef.current = document.querySelector(".platform");
-    setInterval(checkOnPlatform, 20);
-  }, [checkOnPlatform]);
+    if (platformCount.length <= 2) {
+      setTimeout(() => {
+        dispatch(setPlatformCount());
+      }, 1000);
+    }
+    platformRef.current = document.querySelectorAll(".platform");
+    platformRef.current.forEach((item) =>
+      setInterval(checkOnPlatform, 25, item)
+    );
+  }, [dispatch, platformCount, checkOnPlatform, platformRef]);
 
   return (
     <div onClick={onJump} className="App">
@@ -86,7 +98,9 @@ function App() {
       {starsCount.map((item, index) => (
         <Stars position={item} key={index} />
       ))}
-      <Platform />
+      {platformCount.map((item, index) => (
+        <Platform position={item} key={index} />
+      ))}
     </div>
   );
 }
