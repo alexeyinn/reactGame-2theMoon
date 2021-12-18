@@ -2,7 +2,7 @@ import { useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { setStarsCount, setPlatformCount } from "./redux/actions/environment";
-import { setInJump, setOnPlatform } from "./redux/actions/doge";
+import { setInJump, setOnPlatform, setDogeToUp } from "./redux/actions/doge";
 
 import { Stars, Platform, Doge } from "./components";
 
@@ -26,11 +26,13 @@ function App() {
   const onJump = useCallback(() => {
     dispatch(setInJump(true));
     dispatch(setOnPlatform({}));
+    dispatch(setDogeToUp(getComputedStyle(dogeRef.current).bottom));
     setTimeout(() => {
       dispatch(setInJump(false));
+      dispatch(setDogeToUp({}));
     }, 600);
   }, [dispatch]);
-
+  // TODO Объеденить состояние inJump, onPlatform, и dogeToUp
   let dogeRef = useRef();
   let dogePositionRef = useRef();
   let platformRef = useRef();
@@ -54,6 +56,7 @@ function App() {
         doge.bottom >= platform.top &&
         doge.bottom <= platform.top + 10
       ) {
+        // TODO вынести логику в редюсер
         // Собака запрыгнула
         dispatch(setInJump(true));
         let platformY = getComputedStyle(platformBorder).bottom;
@@ -88,7 +91,7 @@ function App() {
     }
     platformRef.current = document.querySelectorAll(".platform");
     platformRef.current.forEach((item) =>
-      setInterval(checkOnPlatform, 25, item)
+      setInterval(checkOnPlatform, 10, item)
     );
   }, [dispatch, platformCount, checkOnPlatform, platformRef]);
 

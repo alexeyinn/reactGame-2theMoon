@@ -7,3 +7,8 @@ export const setOnPlatform = (floorPosition) => ({
   type: "SET_ON_PLATFORM",
   payload: floorPosition,
 });
+
+export const setDogeToUp = (dogeY) => ({
+  type: "SET_DOGE_TO_UP",
+  payload: dogeY,
+});
