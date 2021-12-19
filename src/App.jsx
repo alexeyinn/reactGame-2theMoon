@@ -6,7 +6,7 @@ import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
 
 import { Stars, Platform, Doge } from "./components";
 
-import { onJump, checkOnPlatform } from "./utils/formulas";
+import { onJump, checkOnPlatform, newPlatformGen } from "./utils/formulas";
 
 function App() {
   const dispatch = useDispatch();
@@ -17,11 +17,14 @@ function App() {
 
   useEffect(() => {
     dogeRef.current = document.querySelector(".doge");
-    if (starsCount.length <= 2) {
+    if (starsCount.length <= 3) {
       setTimeout(() => {
         dispatch(setStarsCount());
       }, 1000);
     }
+    setInterval(() => {
+      newPlatformGen(dispatch, setPlatformCount);
+    }, 18000);
   }, [dispatch, starsCount]);
 
   let dogeRef = useRef();
@@ -36,7 +39,7 @@ function App() {
   useEffect(() => {
     if (platformCount.length <= 5) {
       setTimeout(() => {
-        dispatch(setPlatformCount());
+        dispatch(setPlatformCount([]));
       }, 500);
     }
     platformRef.current = document.querySelectorAll(".platform");

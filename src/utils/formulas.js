@@ -65,3 +65,12 @@ export const checkOnPlatform = (
     dispatch(setOnPlatform(false));
   }
 };
+
+// --- Генерация новых платформ
+export const newPlatformGen = (dispatch, setPlatformCount) => {
+  for (let i = 0; i <= 5; i++) {
+    setTimeout(() => {
+      dispatch(setPlatformCount(i));
+    }, (i + 1) * 3000);
+  }
+};

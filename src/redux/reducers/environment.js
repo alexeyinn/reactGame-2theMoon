@@ -16,10 +16,21 @@ const environment = (state = initialState, action) => {
       const getRandomInt = () => {
         return Math.floor(Math.random() * 3);
       };
-      let platformPosition = (getRandomInt() + 1) * 27;
+      let arrOfPlatforms;
+      let platformPosition = () => (getRandomInt() + 1) * 27;
+
+      if (typeof action.payload === "object") {
+        arrOfPlatforms = [...state.platformCount, platformPosition()];
+      } else {
+        platformPosition = state.platformCount.map((item, index) =>
+          index === action.payload ? (item = platformPosition()) : item
+        );
+        arrOfPlatforms = platformPosition;
+      }
+
       return {
         ...state,
-        platformCount: [...state.platformCount, platformPosition],
+        platformCount: arrOfPlatforms,
       };
     }
     default:
