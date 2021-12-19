@@ -13,7 +13,10 @@ const environment = (state = initialState, action) => {
       };
     }
     case "SET_PLATFORM_COUNT": {
-      let platformPosition = (state.platformCount.length + 1) * 27;
+      const getRandomInt = () => {
+        return Math.floor(Math.random() * 3);
+      };
+      let platformPosition = (getRandomInt() + 1) * 27;
       return {
         ...state,
         platformCount: [...state.platformCount, platformPosition],

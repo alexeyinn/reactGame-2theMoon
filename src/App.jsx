@@ -25,7 +25,7 @@ function App() {
   // --- Собака прыгает
   const onJump = useCallback(() => {
     dispatch(
-      setDogePosition([getComputedStyle(dogeRef.current).bottom, 300, 1])
+      setDogePosition([getComputedStyle(dogeRef.current).bottom, 400, 1])
     );
     dispatch(setOnPlatform(false));
     setTimeout(() => {
@@ -41,7 +41,7 @@ function App() {
   dogepositionRef.current = dogePosition;
   let onPlatformRef = useRef();
   onPlatformRef.current = onPlatform;
-
+  // --- Проверяем контакт с платформой
   const checkOnPlatform = useCallback(
     (platformBorder) => {
       dogePositionRef.current = dogeRef.current.getBoundingClientRect();
@@ -61,9 +61,23 @@ function App() {
         dispatch(
           setDogePosition([getComputedStyle(platformBorder).bottom, 40, 0.1])
         );
-      }
-
-      if (
+      } else if (
+        dogepositionRef.current.bottom === undefined &&
+        doge.left < platform.right &&
+        onPlatformRef.current === false &&
+        platform.left <= doge.right &&
+        doge.bottom >= platform.top &&
+        doge.bottom <= platform.top + 30
+      ) {
+        // --- Переход с платформы на платформу без падения
+        dispatch(
+          setDogePosition([getComputedStyle(platformBorder).bottom, 40, 0.1])
+        );
+        dispatch(setOnPlatform(true));
+      } else if (
+        // Для оптимизации и уменьшения обращений к состоянию
+        // при переходах с одной платформы - на другую,
+        // можно добавить в условия новый флаг inJump etc
         onPlatformRef.current === true &&
         dogepositionRef.current.bottom !== undefined &&
         doge.left > platform.right &&
@@ -78,10 +92,10 @@ function App() {
   );
 
   useEffect(() => {
-    if (platformCount.length <= 2) {
+    if (platformCount.length <= 5) {
       setTimeout(() => {
         dispatch(setPlatformCount());
-      }, 1000);
+      }, 500);
     }
     platformRef.current = document.querySelectorAll(".platform");
     platformRef.current.forEach((item) =>
