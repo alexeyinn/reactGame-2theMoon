@@ -1,6 +1,11 @@
 const initialState = {
   starsCount: [],
   platformCount: [],
+  coinsCount: [],
+};
+
+const getRandomInt = (range) => {
+  return Math.floor(Math.random() * range);
 };
 
 const environment = (state = initialState, action) => {
@@ -13,11 +18,8 @@ const environment = (state = initialState, action) => {
       };
     }
     case "SET_PLATFORM_COUNT": {
-      const getRandomInt = () => {
-        return Math.floor(Math.random() * 3);
-      };
       let arrOfPlatforms;
-      let platformPosition = () => (getRandomInt() + 1) * 27;
+      let platformPosition = () => (getRandomInt(3) + 1) * 27;
 
       if (typeof action.payload === "object") {
         arrOfPlatforms = [...state.platformCount, platformPosition()];
@@ -31,6 +33,14 @@ const environment = (state = initialState, action) => {
       return {
         ...state,
         platformCount: arrOfPlatforms,
+      };
+    }
+
+    case "SET_COINS_COUNT": {
+      let coinsPosition = getRandomInt(16);
+      return {
+        ...state,
+        coinsCount: [...state.coinsCount, coinsPosition],
       };
     }
     default:

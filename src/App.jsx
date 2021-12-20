@@ -1,16 +1,20 @@
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setStarsCount, setPlatformCount } from "./redux/actions/environment";
+import {
+  setStarsCount,
+  setPlatformCount,
+  setCoinsCount,
+} from "./redux/actions/environment";
 import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
 
-import { Stars, Platform, Doge } from "./components";
+import { Stars, Platform, Doge, Coin } from "./components";
 
 import { onJump, checkOnPlatform, newPlatformGen } from "./utils/formulas";
 
 function App() {
   const dispatch = useDispatch();
-  const { starsCount, platformCount } = useSelector(
+  const { starsCount, platformCount, coinsCount } = useSelector(
     ({ environment }) => environment
   );
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
@@ -62,6 +66,14 @@ function App() {
     );
   }, [dispatch, platformCount, platformRef]);
 
+  useEffect(() => {
+    if (coinsCount.length <= 28) {
+      setTimeout(() => {
+        dispatch(setCoinsCount([]));
+      }, 100);
+    }
+  }, [dispatch, coinsCount]);
+
   return (
     <div
       onClick={() => onJump(dispatch, setDogePosition, dogeRef, setOnPlatform)}
@@ -73,6 +85,9 @@ function App() {
       ))}
       {platformCount.map((item, index) => (
         <Platform position={item} key={index} />
+      ))}
+      {coinsCount.map((item, index) => (
+        <Coin key={index} position={item} />
       ))}
     </div>
   );
