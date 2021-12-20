@@ -85,9 +85,7 @@ function App() {
       )
     );
   }, [dispatch, coinsCount, dogePosition]);
-  // TODO Попробовать решить проблему съезжания монет:
-  // Добавить состояние collectedCoins и на его основе
-  // Фильтровать несобранные монеты
+
   return (
     <div
       onClick={() => onJump(dispatch, setDogePosition, dogeRef, setOnPlatform)}

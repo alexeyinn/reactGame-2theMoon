@@ -37,10 +37,9 @@ export const movePlatforms = (dispatch, setPlatformCount) => {
 // --- Генерация новых монет в начале игры
 export const startCoins = (dispatch, setCoinsCount) => {
   for (let i = 0; i <= 7; i++) {
-    // 28
     setTimeout(() => {
       dispatch(setCoinsCount([]));
-    }, 700 * i);
+    }, 400 * i);
   }
 };
 
@@ -125,6 +124,6 @@ export const checkOnCoin = (
     dispatch(setCoinsCount(coinBorder.id));
     setTimeout(() => {
       dispatch(setCoinsCount([]));
-    }, 100);
+    }, 400);
   }
 };

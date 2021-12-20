@@ -12,7 +12,7 @@ const coins = (state = initialState, action) => {
       let newCoinsArr = state.coinsCount;
 
       if (Array.isArray(action.payload) === false) {
-        newCoinsArr.splice(action.payload, 1);
+        delete newCoinsArr[action.payload];
       } else {
         newCoinsArr = [...state.coinsCount, getRandomInt(16)];
       }
@@ -22,6 +22,7 @@ const coins = (state = initialState, action) => {
         coinsCount: newCoinsArr,
       };
     }
+
     default:
       return state;
   }

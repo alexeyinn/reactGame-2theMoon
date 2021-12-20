@@ -1,9 +1,18 @@
 import "./style.scss";
 
 function Coin(props) {
-  let coinStyle = {
-    top: props.position * 5 + "vh",
-  };
+  let coinStyle;
+
+  if (props.position === undefined) {
+    coinStyle = {
+      display: "none",
+    };
+  } else {
+    coinStyle = {
+      top: props.position * 5 + "vh",
+    };
+  }
+
   return (
     <img
       id={props.id}
