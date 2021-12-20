@@ -1,7 +1,6 @@
 const initialState = {
   starsCount: [],
   platformCount: [],
-  coinsCount: [],
 };
 
 const getRandomInt = (range) => {
@@ -33,14 +32,6 @@ const environment = (state = initialState, action) => {
       return {
         ...state,
         platformCount: arrOfPlatforms,
-      };
-    }
-
-    case "SET_COINS_COUNT": {
-      let coinsPosition = getRandomInt(16);
-      return {
-        ...state,
-        coinsCount: [...state.coinsCount, coinsPosition],
       };
     }
     default:

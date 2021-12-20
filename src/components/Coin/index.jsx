@@ -6,6 +6,7 @@ function Coin(props) {
   };
   return (
     <img
+      id={props.id}
       className="coin flying"
       style={coinStyle}
       src="img/coins/btc.svg"

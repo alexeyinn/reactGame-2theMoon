@@ -1,40 +1,35 @@
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import {
-  setStarsCount,
-  setPlatformCount,
-  setCoinsCount,
-} from "./redux/actions/environment";
+import { setStarsCount, setPlatformCount } from "./redux/actions/environment";
 import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
+import { setCoinsCount } from "./redux/actions/coins";
 
 import { Stars, Platform, Doge, Coin } from "./components";
 
 import {
   onJump,
-  newPlatformGen,
+  startCoins,
   checkOnPlatform,
   checkOnCoin,
+  movePlatforms,
+  renderStars,
 } from "./utils/formulas";
 
 function App() {
   const dispatch = useDispatch();
-  const { starsCount, platformCount, coinsCount } = useSelector(
+  const { starsCount, platformCount } = useSelector(
     ({ environment }) => environment
   );
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
+  const { coinsCount } = useSelector(({ coins }) => coins);
 
   useEffect(() => {
     dogeRef.current = document.querySelector(".doge");
-    if (starsCount.length <= 3) {
-      setTimeout(() => {
-        dispatch(setStarsCount());
-      }, 1000);
-    }
-    setInterval(() => {
-      newPlatformGen(dispatch, setPlatformCount);
-    }, 18000);
-  }, [dispatch, starsCount]);
+    renderStars(dispatch, setStarsCount);
+    startCoins(dispatch, setCoinsCount);
+    movePlatforms(dispatch, setPlatformCount);
+  }, [dispatch]);
 
   let dogeRef = useRef();
   let dogePositionRef = useRef();
@@ -74,20 +69,25 @@ function App() {
   }, [dispatch, platformCount, platformRef]);
 
   useEffect(() => {
-    if (coinsCount.length <= 28) {
-      setTimeout(() => {
-        dispatch(setCoinsCount([]));
-      }, 100);
-    }
     coinRef.current = document.querySelectorAll(".coin");
     coinRef.current.forEach((item) =>
       setInterval(
-        () => checkOnCoin(dogePositionRef, dogeRef, coinPositionRef, item),
-        700
+        () =>
+          checkOnCoin(
+            dogePositionRef,
+            dogeRef,
+            coinPositionRef,
+            item,
+            dispatch,
+            setCoinsCount
+          ),
+        650
       )
     );
   }, [dispatch, coinsCount, dogePosition]);
-
+  // TODO Попробовать решить проблему съезжания монет:
+  // Добавить состояние collectedCoins и на его основе
+  // Фильтровать несобранные монеты
   return (
     <div
       onClick={() => onJump(dispatch, setDogePosition, dogeRef, setOnPlatform)}
@@ -101,7 +101,7 @@ function App() {
         <Platform position={item} key={index} />
       ))}
       {coinsCount.map((item, index) => (
-        <Coin key={index} position={item} />
+        <Coin key={index} position={item} id={index} />
       ))}
     </div>
   );

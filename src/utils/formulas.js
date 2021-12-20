@@ -9,12 +9,38 @@ export const onJump = (dispatch, setDogePosition, dogeElem, setOnPlatform) => {
   }, 600);
 };
 
-// --- Генерация новых платформ
+// --- Рендерим фоновые звезды
+export const renderStars = (dispatch, setStarsCount) => {
+  for (let i = 0; i <= 3; i++) {
+    setTimeout(() => {
+      dispatch(setStarsCount());
+    }, i * 1000);
+  }
+};
+
+// --- Рендер стартовых платформ
 export const newPlatformGen = (dispatch, setPlatformCount) => {
   for (let i = 0; i <= 5; i++) {
     setTimeout(() => {
       dispatch(setPlatformCount(i));
     }, (i + 1) * 3000);
+  }
+};
+
+// --- Через 18 сек после старта, двигаем платформы
+export const movePlatforms = (dispatch, setPlatformCount) => {
+  setInterval(() => {
+    newPlatformGen(dispatch, setPlatformCount);
+  }, 18000);
+};
+
+// --- Генерация новых монет в начале игры
+export const startCoins = (dispatch, setCoinsCount) => {
+  for (let i = 0; i <= 7; i++) {
+    // 28
+    setTimeout(() => {
+      dispatch(setCoinsCount([]));
+    }, 700 * i);
   }
 };
 
@@ -63,7 +89,7 @@ export const checkOnPlatform = (
   } else if (
     // Для оптимизации и уменьшения обращений к состоянию
     // при переходах с одной платформы - на другую,
-    // можно добавить в условия новый флаг inJump etc
+    // можно попробовать добавить в условия новый флаг inJump etc
     onPlatformRef.current === true &&
     inJump.current.bottom !== undefined &&
     doge.left > platform.right &&
@@ -80,7 +106,9 @@ export const checkOnCoin = (
   dogePosition,
   dogeElem,
   coinPosition,
-  coinBorder
+  coinBorder,
+  dispatch,
+  setCoinsCount
 ) => {
   dogePosition.current = dogeElem.current.getBoundingClientRect();
   coinPosition.current = coinBorder.getBoundingClientRect();
@@ -94,6 +122,9 @@ export const checkOnCoin = (
     coin.top <= doge.bottom
   ) {
     // --- Собака подбирает монету
-    alert("FRONT collect");
+    dispatch(setCoinsCount(coinBorder.id));
+    setTimeout(() => {
+      dispatch(setCoinsCount([]));
+    }, 100);
   }
 };
