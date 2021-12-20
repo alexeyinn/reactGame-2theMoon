@@ -9,6 +9,15 @@ export const onJump = (dispatch, setDogePosition, dogeElem, setOnPlatform) => {
   }, 600);
 };
 
+// --- Генерация новых платформ
+export const newPlatformGen = (dispatch, setPlatformCount) => {
+  for (let i = 0; i <= 5; i++) {
+    setTimeout(() => {
+      dispatch(setPlatformCount(i));
+    }, (i + 1) * 3000);
+  }
+};
+
 // --- Проверяем контакт с платформой
 export const checkOnPlatform = (
   dogePosition,
@@ -66,11 +75,25 @@ export const checkOnPlatform = (
   }
 };
 
-// --- Генерация новых платформ
-export const newPlatformGen = (dispatch, setPlatformCount) => {
-  for (let i = 0; i <= 5; i++) {
-    setTimeout(() => {
-      dispatch(setPlatformCount(i));
-    }, (i + 1) * 3000);
+// --- Проверяем контакт с монетой
+export const checkOnCoin = (
+  dogePosition,
+  dogeElem,
+  coinPosition,
+  coinBorder
+) => {
+  dogePosition.current = dogeElem.current.getBoundingClientRect();
+  coinPosition.current = coinBorder.getBoundingClientRect();
+  let doge = dogePosition.current;
+  let coin = coinPosition.current;
+
+  if (
+    doge.right >= coin.left &&
+    (coin.bottom >= doge.bottom || coin.bottom + 145 >= doge.bottom) &&
+    (coin.right >= doge.right || coin.right + 145 >= doge.right) &&
+    coin.top <= doge.bottom
+  ) {
+    // --- Собака подбирает монету
+    alert("FRONT collect");
   }
 };

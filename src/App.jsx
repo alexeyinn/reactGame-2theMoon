@@ -10,7 +10,12 @@ import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
 
 import { Stars, Platform, Doge, Coin } from "./components";
 
-import { onJump, checkOnPlatform, newPlatformGen } from "./utils/formulas";
+import {
+  onJump,
+  newPlatformGen,
+  checkOnPlatform,
+  checkOnCoin,
+} from "./utils/formulas";
 
 function App() {
   const dispatch = useDispatch();
@@ -39,6 +44,8 @@ function App() {
   inJump.current = dogePosition;
   let onPlatformRef = useRef();
   onPlatformRef.current = onPlatform;
+  let coinRef = useRef();
+  let coinPositionRef = useRef();
 
   useEffect(() => {
     if (platformCount.length <= 5) {
@@ -72,7 +79,14 @@ function App() {
         dispatch(setCoinsCount([]));
       }, 100);
     }
-  }, [dispatch, coinsCount]);
+    coinRef.current = document.querySelectorAll(".coin");
+    coinRef.current.forEach((item) =>
+      setInterval(
+        () => checkOnCoin(dogePositionRef, dogeRef, coinPositionRef, item),
+        700
+      )
+    );
+  }, [dispatch, coinsCount, dogePosition]);
 
   return (
     <div
