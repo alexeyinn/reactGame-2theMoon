@@ -1,6 +1,8 @@
+import React from "react";
+
 import "./style.scss";
 
-function Coin(props) {
+const Coin = React.memo(function Coin(props) {
   let coinStyle;
 
   if (props.position === undefined) {
@@ -13,15 +15,21 @@ function Coin(props) {
     };
   }
 
+  const getRandomInt = () => {
+    return Math.floor(Math.random() * 3);
+  };
+
+  const coinsType = ["btc", "eth", "shiba"];
+
   return (
     <img
       id={props.id}
       className="coin flying"
       style={coinStyle}
-      src="img/coins/btc.svg"
+      src={`img/coins/${coinsType[getRandomInt()]}.svg`}
       alt="coin"
     />
   );
-}
+});
 
 export default Coin;
