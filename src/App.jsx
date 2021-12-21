@@ -3,14 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 
 import {
-  setStarsCount,
   setPlatformCount,
-  setGameScore,
-  setMusicIsStarts,
   setSoundIsEnable,
 } from "./redux/actions/environment";
-import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
-import { setCoinsCount } from "./redux/actions/coins";
 
 import { Stars, Platform, Doge, Coin } from "./components";
 
@@ -33,6 +28,13 @@ function App() {
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
   const { coinsCount } = useSelector(({ coins }) => coins);
 
+  useEffect(() => {
+    dogeRef.current = document.querySelector(".doge");
+    renderStars(dispatch);
+    startCoins(dispatch);
+    movePlatforms(dispatch);
+  }, [dispatch]);
+
   const [nyanDogBegin] = useSound(nyanDogStarts, {
     volume: soundIsEnable,
   });
@@ -47,13 +49,6 @@ function App() {
       setInterval(nyanDogConttinue, 22000);
     }, 33500);
   };
-
-  useEffect(() => {
-    dogeRef.current = document.querySelector(".doge");
-    renderStars(dispatch, setStarsCount);
-    startCoins(dispatch, setCoinsCount);
-    movePlatforms(dispatch, setPlatformCount);
-  }, [dispatch]);
 
   let dogeRef = useRef();
   let dogePositionRef = useRef();
@@ -82,9 +77,7 @@ function App() {
             platformPositionRef,
             item,
             inJump,
-            setOnPlatform,
             dispatch,
-            setDogePosition,
             onPlatformRef
           ),
         10
@@ -102,9 +95,7 @@ function App() {
             dogeRef,
             coinPositionRef,
             item,
-            dispatch,
-            setCoinsCount,
-            setGameScore
+            dispatch
           ),
         650
       )
@@ -114,15 +105,7 @@ function App() {
   return (
     <div
       onClick={() =>
-        onJump(
-          dispatch,
-          setDogePosition,
-          dogeRef,
-          setOnPlatform,
-          musicIsStarts,
-          setMusicIsStarts,
-          startsBackgroundMusic
-        )
+        onJump(dispatch, dogeRef, musicIsStarts, startsBackgroundMusic)
       }
       className="App"
     >
@@ -140,7 +123,7 @@ function App() {
       <img
         onClick={() => dispatch(setSoundIsEnable())}
         className="sound"
-        src="img/music.svg"
+        src={`img/music${soundIsEnable ? "" : "Off"}.svg`}
         alt="sound"
       />
     </div>

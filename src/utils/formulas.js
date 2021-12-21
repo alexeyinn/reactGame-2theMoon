@@ -1,14 +1,17 @@
-// TODO Проверить, можно ли сюда, напрямую передать
-// Ссылки на redux экшены
+import {
+  setStarsCount,
+  setPlatformCount,
+  setGameScore,
+  setMusicIsStarts,
+} from "../redux/actions/environment";
+import { setOnPlatform, setDogePosition } from "../redux/actions/doge";
+import { setCoinsCount } from "../redux/actions/coins";
 
 // --- Собака прыгает
 export const onJump = (
   dispatch,
-  setDogePosition,
   dogeElem,
-  setOnPlatform,
   musicIsStarts,
-  setMusicIsStarts,
   startsBackgroundMusic
 ) => {
   dispatch(
@@ -25,7 +28,7 @@ export const onJump = (
 };
 
 // --- Рендерим фоновые звезды
-export const renderStars = (dispatch, setStarsCount) => {
+export const renderStars = (dispatch) => {
   for (let i = 0; i <= 3; i++) {
     setTimeout(() => {
       dispatch(setStarsCount());
@@ -34,7 +37,7 @@ export const renderStars = (dispatch, setStarsCount) => {
 };
 
 // --- Рендер стартовых платформ
-export const newPlatformGen = (dispatch, setPlatformCount) => {
+export const newPlatformGen = (dispatch) => {
   for (let i = 0; i <= 5; i++) {
     setTimeout(() => {
       dispatch(setPlatformCount(i));
@@ -43,14 +46,14 @@ export const newPlatformGen = (dispatch, setPlatformCount) => {
 };
 
 // --- Через 18 сек после старта, двигаем платформы
-export const movePlatforms = (dispatch, setPlatformCount) => {
+export const movePlatforms = (dispatch) => {
   setInterval(() => {
     newPlatformGen(dispatch, setPlatformCount);
   }, 18000);
 };
 
 // --- Генерация новых монет в начале игры
-export const startCoins = (dispatch, setCoinsCount) => {
+export const startCoins = (dispatch) => {
   for (let i = 0; i <= 7; i++) {
     setTimeout(() => {
       dispatch(setCoinsCount([]));
@@ -65,9 +68,7 @@ export const checkOnPlatform = (
   platformPosition,
   platformBorder,
   inJump,
-  setOnPlatform,
   dispatch,
-  setDogePosition,
   onPlatformRef
 ) => {
   dogePosition.current = dogeElem.current.getBoundingClientRect();
@@ -121,9 +122,7 @@ export const checkOnCoin = (
   dogeElem,
   coinPosition,
   coinBorder,
-  dispatch,
-  setCoinsCount,
-  setGameScore
+  dispatch
 ) => {
   dogePosition.current = dogeElem.current.getBoundingClientRect();
   coinPosition.current = coinBorder.getBoundingClientRect();
