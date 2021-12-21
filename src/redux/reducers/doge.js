@@ -17,6 +17,7 @@ const doge = (state = initialState, action) => {
 
       if (Array.isArray(action.payload)) {
         let dogeY = action.payload[0];
+        // RegExp для получения числа из строки с текстом
         let px = +dogeY.match(/\d+/)[0] + action.payload[1];
         newDogePosition = {
           bottom: px + "px",

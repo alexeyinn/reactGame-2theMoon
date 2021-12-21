@@ -1,5 +1,16 @@
+// TODO Проверить, можно ли сюда, напрямую передать
+// Ссылки на redux экшены
+
 // --- Собака прыгает
-export const onJump = (dispatch, setDogePosition, dogeElem, setOnPlatform) => {
+export const onJump = (
+  dispatch,
+  setDogePosition,
+  dogeElem,
+  setOnPlatform,
+  musicIsStarts,
+  setMusicIsStarts,
+  startsBackgroundMusic
+) => {
   dispatch(
     setDogePosition([getComputedStyle(dogeElem.current).bottom, 400, 1])
   );
@@ -7,6 +18,10 @@ export const onJump = (dispatch, setDogePosition, dogeElem, setOnPlatform) => {
   setTimeout(() => {
     dispatch(setDogePosition({}));
   }, 600);
+  if (musicIsStarts === false) {
+    dispatch(setMusicIsStarts());
+    startsBackgroundMusic();
+  }
 };
 
 // --- Рендерим фоновые звезды

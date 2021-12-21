@@ -11,3 +11,11 @@ export const setGameScore = (score) => ({
   type: "SET_GAME_SCORE",
   payload: score,
 });
+
+export const setMusicIsStarts = () => ({
+  type: "SET_MUSIC_IS_STARTS",
+});
+
+export const setSoundIsEnable = () => ({
+  type: "SET_SOUND_IS_ENABLE",
+});

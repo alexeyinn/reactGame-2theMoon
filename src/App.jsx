@@ -1,10 +1,13 @@
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import useSound from "use-sound";
 
 import {
   setStarsCount,
   setPlatformCount,
   setGameScore,
+  setMusicIsStarts,
+  setSoundIsEnable,
 } from "./redux/actions/environment";
 import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
 import { setCoinsCount } from "./redux/actions/coins";
@@ -20,13 +23,30 @@ import {
   renderStars,
 } from "./utils/formulas";
 
+import nyanDogStarts from "./assets/sounds/nyanDogStarts.mp3";
+import nyanDogMain from "./assets/sounds/nyanDogMain.mp3";
+
 function App() {
   const dispatch = useDispatch();
-  const { starsCount, platformCount, gameScore } = useSelector(
-    ({ environment }) => environment
-  );
+  const { starsCount, platformCount, gameScore, musicIsStarts, soundIsEnable } =
+    useSelector(({ environment }) => environment);
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
   const { coinsCount } = useSelector(({ coins }) => coins);
+
+  const [nyanDogBegin] = useSound(nyanDogStarts, {
+    volume: soundIsEnable,
+  });
+  const [nyanDogConttinue] = useSound(nyanDogMain, {
+    volume: soundIsEnable,
+  });
+
+  const startsBackgroundMusic = () => {
+    nyanDogBegin();
+    setTimeout(nyanDogConttinue, 33500);
+    setTimeout(() => {
+      setInterval(nyanDogConttinue, 22000);
+    }, 33500);
+  };
 
   useEffect(() => {
     dogeRef.current = document.querySelector(".doge");
@@ -90,10 +110,20 @@ function App() {
       )
     );
   }, [dispatch, coinsCount, dogePosition]);
-  // TODO Добавить $ к счетчику
+
   return (
     <div
-      onClick={() => onJump(dispatch, setDogePosition, dogeRef, setOnPlatform)}
+      onClick={() =>
+        onJump(
+          dispatch,
+          setDogePosition,
+          dogeRef,
+          setOnPlatform,
+          musicIsStarts,
+          setMusicIsStarts,
+          startsBackgroundMusic
+        )
+      }
       className="App"
     >
       <Doge />
@@ -107,6 +137,12 @@ function App() {
         <Coin key={index} position={item} id={index} />
       ))}
       <p>{gameScore}</p>
+      <img
+        onClick={() => dispatch(setSoundIsEnable())}
+        className="sound"
+        src="img/music.svg"
+        alt="sound"
+      />
     </div>
   );
 }

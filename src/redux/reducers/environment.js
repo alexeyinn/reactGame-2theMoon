@@ -1,7 +1,9 @@
 const initialState = {
   starsCount: [],
   platformCount: [],
-  gameScore: "0000000",
+  gameScore: "$0000000",
+  musicIsStarts: false,
+  soundIsEnable: 1,
 };
 
 const getRandomInt = (range) => {
@@ -15,6 +17,22 @@ const environment = (state = initialState, action) => {
       return {
         ...state,
         starsCount: [...state.starsCount, starsPosition],
+      };
+    }
+
+    case "SET_MUSIC_IS_STARTS": {
+      return {
+        ...state,
+        musicIsStarts: !state.musicIsStarts,
+      };
+    }
+
+    case "SET_SOUND_IS_ENABLE": {
+      let newVolumeLvl = state.soundIsEnable ? 0 : 1;
+
+      return {
+        ...state,
+        soundIsEnable: newVolumeLvl,
       };
     }
 
@@ -39,17 +57,17 @@ const environment = (state = initialState, action) => {
 
     case "SET_GAME_SCORE": {
       let newCount;
-      let newScore = +state.gameScore + action.payload;
+      let newScore = +state.gameScore.match(/\d+/) + action.payload;
       let newScoreInStr = newScore.toString();
       let emptySlots = 7 - newScoreInStr.length;
       if (emptySlots === 3) {
-        newCount = "000" + newScoreInStr;
+        newCount = "$000" + newScoreInStr;
       } else if (emptySlots === 2) {
-        newCount = "00" + newScoreInStr;
+        newCount = "$00" + newScoreInStr;
       } else if (emptySlots === 1) {
-        newCount = "0" + newScoreInStr;
+        newCount = "$0" + newScoreInStr;
       } else {
-        newCount = newScoreInStr;
+        newCount = "$" + newScoreInStr;
       }
 
       return {
