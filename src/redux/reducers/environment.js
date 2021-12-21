@@ -1,6 +1,7 @@
 const initialState = {
   starsCount: [],
   platformCount: [],
+  gameScore: "0000000",
 };
 
 const getRandomInt = (range) => {
@@ -16,6 +17,7 @@ const environment = (state = initialState, action) => {
         starsCount: [...state.starsCount, starsPosition],
       };
     }
+
     case "SET_PLATFORM_COUNT": {
       let arrOfPlatforms;
       let platformPosition = () => (getRandomInt(3) + 1) * 27;
@@ -34,6 +36,28 @@ const environment = (state = initialState, action) => {
         platformCount: arrOfPlatforms,
       };
     }
+
+    case "SET_GAME_SCORE": {
+      let newCount;
+      let newScore = +state.gameScore + action.payload;
+      let newScoreInStr = newScore.toString();
+      let emptySlots = 7 - newScoreInStr.length;
+      if (emptySlots === 3) {
+        newCount = "000" + newScoreInStr;
+      } else if (emptySlots === 2) {
+        newCount = "00" + newScoreInStr;
+      } else if (emptySlots === 1) {
+        newCount = "0" + newScoreInStr;
+      } else {
+        newCount = newScoreInStr;
+      }
+
+      return {
+        ...state,
+        gameScore: newCount,
+      };
+    }
+
     default:
       return state;
   }

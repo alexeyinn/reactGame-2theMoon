@@ -1,7 +1,11 @@
 import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { setStarsCount, setPlatformCount } from "./redux/actions/environment";
+import {
+  setStarsCount,
+  setPlatformCount,
+  setGameScore,
+} from "./redux/actions/environment";
 import { setOnPlatform, setDogePosition } from "./redux/actions/doge";
 import { setCoinsCount } from "./redux/actions/coins";
 
@@ -18,7 +22,7 @@ import {
 
 function App() {
   const dispatch = useDispatch();
-  const { starsCount, platformCount } = useSelector(
+  const { starsCount, platformCount, gameScore } = useSelector(
     ({ environment }) => environment
   );
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
@@ -79,13 +83,14 @@ function App() {
             coinPositionRef,
             item,
             dispatch,
-            setCoinsCount
+            setCoinsCount,
+            setGameScore
           ),
         650
       )
     );
   }, [dispatch, coinsCount, dogePosition]);
-
+  // TODO Добавить $ к счетчику
   return (
     <div
       onClick={() => onJump(dispatch, setDogePosition, dogeRef, setOnPlatform)}
@@ -101,6 +106,7 @@ function App() {
       {coinsCount.map((item, index) => (
         <Coin key={index} position={item} id={index} />
       ))}
+      <p>{gameScore}</p>
     </div>
   );
 }

@@ -107,7 +107,8 @@ export const checkOnCoin = (
   coinPosition,
   coinBorder,
   dispatch,
-  setCoinsCount
+  setCoinsCount,
+  setGameScore
 ) => {
   dogePosition.current = dogeElem.current.getBoundingClientRect();
   coinPosition.current = coinBorder.getBoundingClientRect();
@@ -122,6 +123,7 @@ export const checkOnCoin = (
   ) {
     // --- Собака подбирает монету
     dispatch(setCoinsCount(coinBorder.id));
+    dispatch(setGameScore(1000));
     setTimeout(() => {
       dispatch(setCoinsCount([]));
     }, 400);
