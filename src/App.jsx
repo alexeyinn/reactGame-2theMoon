@@ -34,7 +34,7 @@ function App() {
   } = useSelector(({ environment }) => environment);
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
   const { coinsCount } = useSelector(({ coins }) => coins);
-
+  // --- Рендер основных элементов UI
   useEffect(() => {
     dogeRef.current = document.querySelector(".doge");
     renderStars(dispatch);
@@ -77,22 +77,29 @@ function App() {
         dispatch(setPlatformCount([]));
       }, 500);
     }
-    platformRef.current = document.querySelectorAll(".platform");
-    platformRef.current.forEach((item) =>
-      setInterval(
-        () =>
-          checkOnPlatform(
-            dogePositionRef,
-            dogeRef,
-            platformPositionRef,
-            item,
-            inJump,
-            dispatch,
-            onPlatformRef
-          ),
-        10
-      )
-    );
+
+    if (dogeRef.current.getBoundingClientRect().top >= 960) {
+      window.confirm("Игра окончена! Хотите сыграть еще?")
+        ? window.location.reload()
+        : (window.location = "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+    } else {
+      platformRef.current = document.querySelectorAll(".platform");
+      platformRef.current.forEach((item) =>
+        setInterval(
+          () =>
+            checkOnPlatform(
+              dogePositionRef,
+              dogeRef,
+              platformPositionRef,
+              item,
+              inJump,
+              dispatch,
+              onPlatformRef
+            ),
+          10
+        )
+      );
+    }
   }, [dispatch, platformCount, platformRef]);
 
   useEffect(() => {
