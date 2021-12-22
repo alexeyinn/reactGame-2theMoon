@@ -122,7 +122,8 @@ export const checkOnCoin = (
   dogeElem,
   coinPosition,
   coinBorder,
-  dispatch
+  dispatch,
+  coinCollected
 ) => {
   dogePosition.current = dogeElem.current.getBoundingClientRect();
   coinPosition.current = coinBorder.getBoundingClientRect();
@@ -141,5 +142,6 @@ export const checkOnCoin = (
     setTimeout(() => {
       dispatch(setCoinsCount([]));
     }, 400);
+    coinCollected();
   }
 };

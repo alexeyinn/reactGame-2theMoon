@@ -20,11 +20,18 @@ import {
 
 import nyanDogStarts from "./assets/sounds/nyanDogStarts.mp3";
 import nyanDogMain from "./assets/sounds/nyanDogMain.mp3";
+import coinPick from "./assets/sounds/coinPick.mp3";
 
 function App() {
   const dispatch = useDispatch();
-  const { starsCount, platformCount, gameScore, musicIsStarts, soundIsEnable } =
-    useSelector(({ environment }) => environment);
+  const {
+    starsCount,
+    platformCount,
+    gameScore,
+    musicIsStarts,
+    soundIsEnable,
+    musicVolumeLvl,
+  } = useSelector(({ environment }) => environment);
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
   const { coinsCount } = useSelector(({ coins }) => coins);
 
@@ -36,9 +43,12 @@ function App() {
   }, [dispatch]);
 
   const [nyanDogBegin] = useSound(nyanDogStarts, {
-    volume: soundIsEnable,
+    volume: musicVolumeLvl,
   });
   const [nyanDogConttinue] = useSound(nyanDogMain, {
+    volume: musicVolumeLvl,
+  });
+  const [coinCollected] = useSound(coinPick, {
     volume: soundIsEnable,
   });
 
@@ -95,12 +105,13 @@ function App() {
             dogeRef,
             coinPositionRef,
             item,
-            dispatch
+            dispatch,
+            coinCollected
           ),
         650
       )
     );
-  }, [dispatch, coinsCount, dogePosition]);
+  }, [dispatch, coinsCount, dogePosition, coinCollected]);
 
   return (
     <div

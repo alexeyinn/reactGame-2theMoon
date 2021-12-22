@@ -4,6 +4,7 @@ const initialState = {
   gameScore: "$0000000",
   musicIsStarts: false,
   soundIsEnable: 1,
+  musicVolumeLvl: 0.2,
 };
 
 const getRandomInt = (range) => {
@@ -28,11 +29,13 @@ const environment = (state = initialState, action) => {
     }
 
     case "SET_SOUND_IS_ENABLE": {
-      let newVolumeLvl = state.soundIsEnable ? 0 : 1;
+      let muteSFX = state.soundIsEnable ? 0 : 1;
+      let muteMusic = state.soundIsEnable ? 0 : 0.2;
 
       return {
         ...state,
-        soundIsEnable: newVolumeLvl,
+        soundIsEnable: muteSFX,
+        musicVolumeLvl: muteMusic,
       };
     }
 
