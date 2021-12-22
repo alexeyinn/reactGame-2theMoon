@@ -7,3 +7,8 @@ export const setDogePosition = (param) => ({
   type: "SET_DOGE_POSITION",
   payload: param,
 });
+
+export const setJumpCount = (numberOfJump) => ({
+  type: "SET_JUMP_COUNT",
+  payload: numberOfJump,
+});

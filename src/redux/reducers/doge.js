@@ -1,6 +1,7 @@
 const initialState = {
   onPlatform: false,
   dogePosition: {},
+  jumpCount: 0,
 };
 
 const doge = (state = initialState, action) => {
@@ -28,6 +29,13 @@ const doge = (state = initialState, action) => {
       return {
         ...state,
         dogePosition: newDogePosition,
+      };
+    }
+
+    case "SET_JUMP_COUNT": {
+      return {
+        ...state,
+        jumpCount: action.payload === 0 ? 0 : state.jumpCount + action.payload,
       };
     }
 

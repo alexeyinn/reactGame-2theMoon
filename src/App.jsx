@@ -32,7 +32,9 @@ function App() {
     musicVolumeLvl,
     gameIsStarts,
   } = useSelector(({ environment }) => environment);
-  const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
+  const { onPlatform, dogePosition, jumpCount } = useSelector(
+    ({ doge }) => doge
+  );
   const { coinsCount } = useSelector(({ coins }) => coins);
   // --- Рендер основных элементов UI
   useEffect(() => {
@@ -96,7 +98,7 @@ function App() {
               dispatch,
               onPlatformRef
             ),
-          10
+          5
         )
       );
     }
@@ -124,7 +126,13 @@ function App() {
   return (
     <div
       onClick={() =>
-        onJump(dispatch, dogeRef, gameIsStarts, startsBackgroundMusic)
+        onJump(
+          dispatch,
+          dogeRef,
+          gameIsStarts,
+          startsBackgroundMusic,
+          jumpCount
+        )
       }
       className="App"
     >

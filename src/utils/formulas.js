@@ -4,7 +4,11 @@ import {
   setGameScore,
   setGameIsStarts,
 } from "../redux/actions/environment";
-import { setOnPlatform, setDogePosition } from "../redux/actions/doge";
+import {
+  setOnPlatform,
+  setDogePosition,
+  setJumpCount,
+} from "../redux/actions/doge";
 import { setCoinsCount } from "../redux/actions/coins";
 
 // --- Собака прыгает
@@ -12,19 +16,23 @@ export const onJump = (
   dispatch,
   dogeElem,
   gameIsStarts,
-  startsBackgroundMusic
+  startsBackgroundMusic,
+  jumpCount
 ) => {
-  dispatch(
-    setDogePosition([getComputedStyle(dogeElem.current).bottom, 400, 1])
-  );
-  dispatch(setOnPlatform(false));
-  setTimeout(() => {
-    dispatch(setDogePosition({}));
-  }, 600);
-
   if (gameIsStarts === false) {
     dispatch(setGameIsStarts());
     startsBackgroundMusic();
+  }
+
+  if (jumpCount <= 1) {
+    dispatch(
+      setDogePosition([getComputedStyle(dogeElem.current).bottom, 400, 1])
+    );
+    dispatch(setOnPlatform(false));
+    setTimeout(() => {
+      dispatch(setDogePosition({}));
+    }, 600);
+    dispatch(setJumpCount(1));
   }
 };
 
@@ -50,7 +58,7 @@ export const newPlatformGen = (dispatch) => {
 export const movePlatforms = (dispatch) => {
   setInterval(() => {
     newPlatformGen(dispatch, setPlatformCount);
-  }, 18000);
+  }, 5000);
 };
 
 // --- Генерация новых монет в начале игры
@@ -89,6 +97,7 @@ export const checkOnPlatform = (
     dispatch(
       setDogePosition([getComputedStyle(platformBorder).bottom, 40, 0.1])
     );
+    dispatch(setJumpCount(0));
   } else if (
     inJump.current.bottom === undefined &&
     doge.left < platform.right &&
@@ -102,6 +111,7 @@ export const checkOnPlatform = (
       setDogePosition([getComputedStyle(platformBorder).bottom, 40, 0.1])
     );
     dispatch(setOnPlatform(true));
+    dispatch(setJumpCount(0));
   } else if (
     // Для оптимизации и уменьшения обращений к состоянию
     // при переходах с одной платформы - на другую,
