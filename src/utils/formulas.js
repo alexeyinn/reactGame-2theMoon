@@ -2,7 +2,7 @@ import {
   setStarsCount,
   setPlatformCount,
   setGameScore,
-  setMusicIsStarts,
+  setGameIsStarts,
 } from "../redux/actions/environment";
 import { setOnPlatform, setDogePosition } from "../redux/actions/doge";
 import { setCoinsCount } from "../redux/actions/coins";
@@ -11,7 +11,7 @@ import { setCoinsCount } from "../redux/actions/coins";
 export const onJump = (
   dispatch,
   dogeElem,
-  musicIsStarts,
+  gameIsStarts,
   startsBackgroundMusic
 ) => {
   dispatch(
@@ -21,8 +21,9 @@ export const onJump = (
   setTimeout(() => {
     dispatch(setDogePosition({}));
   }, 600);
-  if (musicIsStarts === false) {
-    dispatch(setMusicIsStarts());
+
+  if (gameIsStarts === false) {
+    dispatch(setGameIsStarts());
     startsBackgroundMusic();
   }
 };
@@ -123,25 +124,28 @@ export const checkOnCoin = (
   coinPosition,
   coinBorder,
   dispatch,
-  coinCollected
+  coinCollected,
+  gameIsStarts
 ) => {
-  dogePosition.current = dogeElem.current.getBoundingClientRect();
-  coinPosition.current = coinBorder.getBoundingClientRect();
-  let doge = dogePosition.current;
-  let coin = coinPosition.current;
+  if (gameIsStarts === true) {
+    dogePosition.current = dogeElem.current.getBoundingClientRect();
+    coinPosition.current = coinBorder.getBoundingClientRect();
+    let doge = dogePosition.current;
+    let coin = coinPosition.current;
 
-  if (
-    doge.right >= coin.left &&
-    (coin.bottom >= doge.bottom || coin.bottom + 145 >= doge.bottom) &&
-    (coin.right >= doge.right || coin.right + 145 >= doge.right) &&
-    coin.top <= doge.bottom
-  ) {
-    // --- Собака подбирает монету
-    dispatch(setCoinsCount(coinBorder.id));
-    dispatch(setGameScore(1000));
-    setTimeout(() => {
-      dispatch(setCoinsCount([]));
-    }, 400);
-    coinCollected();
+    if (
+      doge.right >= coin.left &&
+      (coin.bottom >= doge.bottom || coin.bottom + 145 >= doge.bottom) &&
+      (coin.right >= doge.right || coin.right + 145 >= doge.right) &&
+      coin.top <= doge.bottom
+    ) {
+      // --- Собака подбирает монету
+      dispatch(setCoinsCount(coinBorder.id));
+      dispatch(setGameScore(1000));
+      setTimeout(() => {
+        dispatch(setCoinsCount([]));
+      }, 400);
+      coinCollected();
+    }
   }
 };

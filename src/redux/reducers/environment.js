@@ -2,8 +2,8 @@ const initialState = {
   starsCount: [],
   platformCount: [],
   gameScore: "$0000000",
-  musicIsStarts: false,
-  soundIsEnable: 1,
+  gameIsStarts: false,
+  soundVolumeLvl: 1,
   musicVolumeLvl: 0.2,
 };
 
@@ -15,26 +15,27 @@ const environment = (state = initialState, action) => {
   switch (action.type) {
     case "SET_STARS_COUNT": {
       let starsPosition = state.starsCount.length * 24;
+
       return {
         ...state,
         starsCount: [...state.starsCount, starsPosition],
       };
     }
 
-    case "SET_MUSIC_IS_STARTS": {
+    case "SET_GAME_IS_STARTS": {
       return {
         ...state,
-        musicIsStarts: !state.musicIsStarts,
+        gameIsStarts: !state.gameIsStarts,
       };
     }
 
     case "SET_SOUND_IS_ENABLE": {
-      let muteSFX = state.soundIsEnable ? 0 : 1;
-      let muteMusic = state.soundIsEnable ? 0 : 0.2;
+      let muteSFX = state.soundVolumeLvl ? 0 : 1;
+      let muteMusic = state.soundVolumeLvl ? 0 : 0.2;
 
       return {
         ...state,
-        soundIsEnable: muteSFX,
+        soundVolumeLvl: muteSFX,
         musicVolumeLvl: muteMusic,
       };
     }
@@ -63,6 +64,7 @@ const environment = (state = initialState, action) => {
       let newScore = +state.gameScore.match(/\d+/) + action.payload;
       let newScoreInStr = newScore.toString();
       let emptySlots = 7 - newScoreInStr.length;
+
       if (emptySlots === 3) {
         newCount = "$000" + newScoreInStr;
       } else if (emptySlots === 2) {

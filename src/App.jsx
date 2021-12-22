@@ -28,9 +28,9 @@ function App() {
     starsCount,
     platformCount,
     gameScore,
-    musicIsStarts,
-    soundIsEnable,
+    soundVolumeLvl,
     musicVolumeLvl,
+    gameIsStarts,
   } = useSelector(({ environment }) => environment);
   const { onPlatform, dogePosition } = useSelector(({ doge }) => doge);
   const { coinsCount } = useSelector(({ coins }) => coins);
@@ -49,7 +49,7 @@ function App() {
     volume: musicVolumeLvl,
   });
   const [coinCollected] = useSound(coinPick, {
-    volume: soundIsEnable,
+    volume: soundVolumeLvl,
   });
 
   const startsBackgroundMusic = () => {
@@ -106,17 +106,18 @@ function App() {
             coinPositionRef,
             item,
             dispatch,
-            coinCollected
+            coinCollected,
+            gameIsStarts
           ),
         650
       )
     );
-  }, [dispatch, coinsCount, dogePosition, coinCollected]);
+  }, [dispatch, coinsCount, dogePosition, coinCollected, gameIsStarts]);
 
   return (
     <div
       onClick={() =>
-        onJump(dispatch, dogeRef, musicIsStarts, startsBackgroundMusic)
+        onJump(dispatch, dogeRef, gameIsStarts, startsBackgroundMusic)
       }
       className="App"
     >
@@ -134,7 +135,7 @@ function App() {
       <img
         onClick={() => dispatch(setSoundIsEnable())}
         className="sound"
-        src={`img/music${soundIsEnable ? "" : "Off"}.svg`}
+        src={`img/music${soundVolumeLvl ? "" : "Off"}.svg`}
         alt="sound"
       />
     </div>
