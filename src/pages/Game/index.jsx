@@ -2,10 +2,7 @@ import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 
-import {
-  setPlatformCount,
-  setSoundIsEnable,
-} from "../../redux/actions/environment";
+import { setPlatformCount } from "../../redux/actions/environment";
 
 import { Platform, Doge, Coin } from "../../components";
 
@@ -143,12 +140,6 @@ function Game() {
         <Coin key={index} position={item} id={index} />
       ))}
       <p>{gameScore}</p>
-      <img
-        onClick={() => dispatch(setSoundIsEnable())}
-        className="sound"
-        src={`img/music${soundVolumeLvl ? "" : "Off"}.svg`}
-        alt="sound"
-      />
     </div>
   );
 }
