@@ -1,0 +1,14 @@
+.game {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+
+  p {
+    position: absolute;
+    bottom: 0vh;
+    right: 2vw;
+    font-family: "Press Start 2P", cursive;
+    font-size: 2vw;
+    color: #ffd700;
+  }
+}
