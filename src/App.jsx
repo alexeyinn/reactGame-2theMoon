@@ -3,14 +3,21 @@ import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
 import useSound from "use-sound";
 
-import { Stars } from "./components";
-import { Title, Auth, Game } from "./pages/index";
+import { Stars, Menu } from "./components";
+import { Title, Game } from "./pages/index";
 
 import { setSoundIsEnable } from "./redux/actions/environment";
 
 import { renderStars } from "./utils/formulas";
 
 import shibaInu from "../src/assets/sounds/shibaInu.mp3";
+
+const authBtnTitle = ["Войти", "Регистрация", "Гость"];
+const authBtnTitleLinks = [
+  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "/game",
+];
 
 function App() {
   const dispatch = useDispatch();
@@ -41,7 +48,13 @@ function App() {
           exact
           element={<Title startMusic={startBackgroundMusic} />}
         />
-        <Route path="/auth" exact element={<Auth />} />
+        <Route
+          path="/auth"
+          exact
+          element={
+            <Menu btnTitle={authBtnTitle} btnLinks={authBtnTitleLinks} />
+          }
+        />
         <Route path="/game" exact element={<Game />} />
       </Routes>
       <img
