@@ -44,9 +44,9 @@ code {
     position: absolute;
     animation-timing-function: linear;
     // Строки ниже, поменять местами,
-    // для ускорения игры в полтора раза
-    //animation-duration: 2s;
-    animation-duration: 3s;
+    // для замедления игры в полтора раза
+    //animation-duration: 3s;
+    animation-duration: 2s;
     animation-name: movement;
     animation-iteration-count: infinite;
   }

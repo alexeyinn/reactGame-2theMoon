@@ -13,10 +13,16 @@ import { renderStars } from "./utils/formulas";
 import shibaInu from "../src/assets/sounds/shibaInu.mp3";
 
 const authBtnTitle = ["Войти", "Регистрация", "Гость"];
-const authBtnTitleLinks = [
+const authBtnLinks = [
   "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
   "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "/preGame",
+];
+const preGameBtnTitle = ["Начать!", "Таблица лидеров", "Как играть?"];
+const preGameBtnLinks = [
   "/game",
+  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
 ];
 
 function App() {
@@ -24,7 +30,7 @@ function App() {
   const { musicVolumeLvl } = useSelector(({ environment }) => environment);
   const { starsCount } = useSelector(({ environment }) => environment);
 
-  const [shibaInuPlay] = useSound(shibaInu, {
+  const [shibaInuPlay, { stop }] = useSound(shibaInu, {
     volume: musicVolumeLvl,
   });
 
@@ -51,11 +57,16 @@ function App() {
         <Route
           path="/auth"
           exact
+          element={<Menu btnTitle={authBtnTitle} btnLinks={authBtnLinks} />}
+        />
+        <Route
+          path="/preGame"
+          exact
           element={
-            <Menu btnTitle={authBtnTitle} btnLinks={authBtnTitleLinks} />
+            <Menu btnTitle={preGameBtnTitle} btnLinks={preGameBtnLinks} />
           }
         />
-        <Route path="/game" exact element={<Game />} />
+        <Route path="/game" exact element={<Game stopMusic={stop} />} />
       </Routes>
       <img
         onClick={() => dispatch(setSoundIsEnable())}

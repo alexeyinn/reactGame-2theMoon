@@ -20,7 +20,7 @@ import coinPick from "../../assets/sounds/coinPick.mp3";
 
 import "./style.scss";
 
-function Game() {
+function Game(props) {
   const dispatch = useDispatch();
   const {
     platformCount,
@@ -39,6 +39,10 @@ function Game() {
     startCoins(dispatch);
     movePlatforms(dispatch);
   }, [dispatch]);
+
+  useEffect(() => {
+    props.stopMusic();
+  }, [props]);
 
   const [nyanDogBegin] = useSound(nyanDogStarts, {
     volume: musicVolumeLvl,
@@ -74,9 +78,9 @@ function Game() {
       setTimeout(() => {
         dispatch(setPlatformCount([]));
         // Строки ниже, поменять местами,
-        // для ускорения игры в полтора раза
-        // }, 325);
-      }, 500);
+        // для замедления игры в полтора раза
+        // }, 500);
+      }, 325);
     }
 
     if (dogeRef.current.getBoundingClientRect().top >= 960) {
