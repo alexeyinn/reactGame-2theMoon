@@ -1,6 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Route, Routes } from "react-router-dom";
+import useSound from "use-sound";
 
 import { Stars } from "./components";
 import { Title, Auth, Game } from "./pages/index";
@@ -9,10 +10,21 @@ import { setSoundIsEnable } from "./redux/actions/environment";
 
 import { renderStars } from "./utils/formulas";
 
+import shibaInu from "../src/assets/sounds/shibaInu.mp3";
+
 function App() {
   const dispatch = useDispatch();
   const { musicVolumeLvl } = useSelector(({ environment }) => environment);
   const { starsCount } = useSelector(({ environment }) => environment);
+
+  const [shibaInuPlay] = useSound(shibaInu, {
+    volume: musicVolumeLvl,
+  });
+
+  const startBackgroundMusic = () => {
+    shibaInuPlay();
+    setInterval(shibaInuPlay, 31000);
+  };
 
   useEffect(() => {
     renderStars(dispatch);
@@ -24,7 +36,11 @@ function App() {
         <Stars position={item} key={index} />
       ))}
       <Routes>
-        <Route path="" exact element={<Title />} />
+        <Route
+          path=""
+          exact
+          element={<Title startMusic={startBackgroundMusic} />}
+        />
         <Route path="/auth" exact element={<Auth />} />
         <Route path="/game" exact element={<Game />} />
       </Routes>
