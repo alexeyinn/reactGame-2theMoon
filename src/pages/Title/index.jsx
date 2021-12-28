@@ -1,8 +1,24 @@
+import { useSelector } from "react-redux";
+import useSound from "use-sound";
+
 import { Link } from "react-router-dom";
 
 import "./style.scss";
 
+import shibaInu from "../../assets/sounds/shibaInu.mp3";
+
 function Title() {
+  const { musicVolumeLvl } = useSelector(({ environment }) => environment);
+
+  const [shibaInuPlay] = useSound(shibaInu, {
+    volume: musicVolumeLvl,
+  });
+
+  const startBackgroundMusic = () => {
+    shibaInuPlay();
+    setInterval(shibaInuPlay, 31000);
+  };
+
   return (
     <div className="title">
       <img className="titleLogo" src="img/coins/shiba.svg" alt="title logo" />
@@ -18,8 +34,12 @@ function Title() {
         </li>
 
         <li>
-          <Link to="/game">
-            <img src="img/toTheMoon.jpg" alt="to the moon logo" />
+          <Link to="/auth">
+            <img
+              onClick={startBackgroundMusic}
+              src="img/toTheMoon.jpg"
+              alt="to the moon logo"
+            />
           </Link>
         </li>
 

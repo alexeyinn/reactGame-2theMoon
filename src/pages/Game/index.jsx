@@ -73,6 +73,9 @@ function Game() {
     if (platformCount.length <= 5) {
       setTimeout(() => {
         dispatch(setPlatformCount([]));
+        // Строки ниже, поменять местами,
+        // для ускорения игры в полтора раза
+        // }, 325);
       }, 500);
     }
 

@@ -41,7 +41,9 @@ code {
   .flying {
     position: absolute;
     animation-timing-function: linear;
-    // Позже протестировать игру на скорости 2с
+    // Строки ниже, поменять местами,
+    // для ускорения игры в полтора раза
+    //animation-duration: 2s;
     animation-duration: 3s;
     animation-name: movement;
     animation-iteration-count: infinite;

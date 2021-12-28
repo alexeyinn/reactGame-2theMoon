@@ -113,9 +113,6 @@ export const checkOnPlatform = (
     dispatch(setOnPlatform(true));
     dispatch(setJumpCount(0));
   } else if (
-    // Для оптимизации и уменьшения обращений к состоянию
-    // при переходах с одной платформы - на другую,
-    // можно попробовать добавить в условия новый флаг inJump etc
     onPlatformRef.current === true &&
     inJump.current.bottom !== undefined &&
     doge.left > platform.right &&
@@ -124,6 +121,7 @@ export const checkOnPlatform = (
     // --- Собака падает с платформы
     dispatch(setDogePosition({}));
     dispatch(setOnPlatform(false));
+    dispatch(setJumpCount(1));
   }
 };
 
