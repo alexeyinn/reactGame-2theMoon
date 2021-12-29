@@ -19,3 +19,8 @@ export const setGameIsStarts = () => ({
 export const setSoundIsEnable = () => ({
   type: "SET_SOUND_IS_ENABLE",
 });
+
+export const setGameOver = (isFall) => ({
+  type: "SET_GAME_OVER",
+  payload: isFall,
+});

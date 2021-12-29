@@ -5,6 +5,7 @@ const initialState = {
   gameIsStarts: false,
   soundVolumeLvl: 1,
   musicVolumeLvl: 0.2,
+  gameOver: false,
 };
 
 const getRandomInt = (range) => {
@@ -78,6 +79,13 @@ const environment = (state = initialState, action) => {
       return {
         ...state,
         gameScore: newCount,
+      };
+    }
+
+    case "SET_GAME_OVER": {
+      return {
+        ...state,
+        gameOver: action.payload,
       };
     }
 

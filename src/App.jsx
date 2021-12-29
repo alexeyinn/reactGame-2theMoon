@@ -29,7 +29,13 @@ function App() {
   useEffect(() => {
     renderStars(dispatch);
   }, [dispatch]);
+  //TODO В конце игры, получаем количество очков, если больше пред рекорда
+  // отправляем на бэк.
 
+  // При перезагрузке игры, не терять имя пользователя.
+  // Дублировать его в local storage и получать от туда?
+
+  // При возвращении в меню, включать музыку
   return (
     <div className="App">
       {starsCount.map((item, index) => (

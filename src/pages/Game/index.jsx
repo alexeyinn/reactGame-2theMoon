@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 
-import { setPlatformCount } from "../../redux/actions/environment";
+import { setPlatformCount, setGameOver } from "../../redux/actions/environment";
 
 import { Platform, Doge, Coin, Final } from "../../components";
 
@@ -19,6 +19,7 @@ import nyanDogMain from "../../assets/sounds/nyanDogMain.mp3";
 import coinPick from "../../assets/sounds/coinPick.mp3";
 
 import "./style.scss";
+import { setJumpCount } from "../../redux/actions/doge";
 
 function Game(props) {
   const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function Game(props) {
     soundVolumeLvl,
     musicVolumeLvl,
     gameIsStarts,
+    gameOver,
   } = useSelector(({ environment }) => environment);
   const { onPlatform, dogePosition, jumpCount } = useSelector(
     ({ doge }) => doge
@@ -84,7 +86,8 @@ function Game(props) {
     }
 
     if (dogeRef.current.getBoundingClientRect().top >= 960) {
-      console.log("final");
+      dispatch(setJumpCount(2));
+      dispatch(setGameOver(true));
     } else {
       platformRef.current = document.querySelectorAll(".platform");
       platformRef.current.forEach((item) =>
@@ -145,7 +148,7 @@ function Game(props) {
         <Coin key={index} position={item} id={index} />
       ))}
       <p className="gameScore">{gameScore}</p>
-      <Final />
+      {gameOver ? <Final /> : null}
     </div>
   );
 }
