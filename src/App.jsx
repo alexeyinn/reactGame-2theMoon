@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import useSound from "use-sound";
 
 import { Stars, Menu } from "./components";
-import { Title, Game } from "./pages/index";
+import { Title, Game, Auth } from "./pages/index";
 
 import { setSoundIsEnable } from "./redux/actions/environment";
 
@@ -12,12 +12,6 @@ import { renderStars } from "./utils/formulas";
 
 import shibaInu from "../src/assets/sounds/shibaInu.mp3";
 
-const authBtnTitle = ["Войти", "Регистрация", "Гость"];
-const authBtnLinks = [
-  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-  "/preGame",
-];
 const preGameBtnTitle = ["Начать!", "Таблица лидеров", "Как играть?"];
 const preGameBtnLinks = [
   "/game",
@@ -54,11 +48,7 @@ function App() {
           exact
           element={<Title startMusic={startBackgroundMusic} />}
         />
-        <Route
-          path="/auth"
-          exact
-          element={<Menu btnTitle={authBtnTitle} btnLinks={authBtnLinks} />}
-        />
+        <Route path="/auth" exact element={<Auth />} />
         <Route
           path="/preGame"
           exact
