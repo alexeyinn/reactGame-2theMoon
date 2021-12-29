@@ -4,7 +4,7 @@ import useSound from "use-sound";
 
 import { setPlatformCount } from "../../redux/actions/environment";
 
-import { Platform, Doge, Coin } from "../../components";
+import { Platform, Doge, Coin, Final } from "../../components";
 
 import {
   onJump,
@@ -84,9 +84,7 @@ function Game(props) {
     }
 
     if (dogeRef.current.getBoundingClientRect().top >= 960) {
-      window.confirm("Игра окончена! Хотите сыграть еще?")
-        ? window.location.reload()
-        : (window.location = "https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+      console.log("final");
     } else {
       platformRef.current = document.querySelectorAll(".platform");
       platformRef.current.forEach((item) =>
@@ -146,7 +144,8 @@ function Game(props) {
       {coinsCount.map((item, index) => (
         <Coin key={index} position={item} id={index} />
       ))}
-      <p>{gameScore}</p>
+      <p className="gameScore">{gameScore}</p>
+      <Final />
     </div>
   );
 }

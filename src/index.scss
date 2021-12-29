@@ -63,3 +63,13 @@ code {
 .sound:hover {
   width: 6vw;
 }
+
+a {
+  text-decoration: none;
+  color: #ffd700;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 1px 1px 20px 5px #000000;
+  }
+}

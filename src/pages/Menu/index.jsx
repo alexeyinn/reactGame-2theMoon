@@ -17,8 +17,8 @@ function Menu() {
           <li>Как играть?</li>
         </ul>
       </div>
-      <p className="userName">{userName}</p>
-      <p className="hiScore">Лучший результат - {hiScore}</p>
+      <p className="menuUi userName">{userName}</p>
+      <p className="menuUi hiScore">Лучший результат - {hiScore}</p>
     </>
   );
 }

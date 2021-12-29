@@ -1,9 +1,12 @@
 .game {
   position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 100vw;
   height: 100vh;
 
-  p {
+  .gameScore {
     position: absolute;
     bottom: 0vh;
     right: 2vw;
