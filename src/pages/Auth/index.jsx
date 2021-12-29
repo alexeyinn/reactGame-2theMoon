@@ -54,7 +54,7 @@ function Auth() {
         ></input>
         <li>
           {inputData ? (
-            <Link to="/preGame" onClick={onAuth}>
+            <Link to="/menu" onClick={onAuth}>
               Играть как: {inputData}{" "}
             </Link>
           ) : (
@@ -62,7 +62,7 @@ function Auth() {
           )}
         </li>
         <li>
-          <Link to="/preGame">Войти как "Гость"</Link>
+          <Link to="/menu">Войти как "Гость"</Link>
         </li>
       </ul>
     </div>
