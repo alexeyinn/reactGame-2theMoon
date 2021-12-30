@@ -18,7 +18,9 @@ function Menu() {
         </ul>
       </div>
       <p className="menuUi userName">{userData.userName}</p>
-      <p className="menuUi hiScore">Лучший результат - {userData.hiScore}</p>
+      <p className="menuUi hiScore">
+        Ваш лучший результат - {userData.hiScore}
+      </p>
     </>
   );
 }
