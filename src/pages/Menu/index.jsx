@@ -1,10 +1,21 @@
-import { useSelector } from "react-redux";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+
+import { setUserData } from "../../redux/actions/user";
 
 import "./style.scss";
 
 function Menu() {
+  const dispatch = useDispatch();
   const { userData } = useSelector(({ user }) => user);
+  const savedUser = sessionStorage.user;
+
+  useEffect(() => {
+    if (userData.id === null && savedUser !== undefined) {
+      dispatch(setUserData(JSON.parse(savedUser)));
+    }
+  });
 
   return (
     <>

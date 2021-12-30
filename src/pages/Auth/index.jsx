@@ -26,7 +26,7 @@ function Auth() {
       };
 
       let logInBefore = await getUserObj();
-
+      // Если пользователь новый - создаем на бэке
       if (logInBefore === undefined) {
         await axios.post("https://61cb6604194ffe0017788d3a.mockapi.io/users", {
           userName: inputData,
@@ -36,6 +36,8 @@ function Auth() {
       } else {
         dispatch(setUserData(logInBefore));
       }
+
+      sessionStorage.setItem("user", JSON.stringify(await getUserObj()));
     } catch (error) {
       alert(
         "Не вышло получить данные с сервера! Вы можеье вернуться на страницу авторизации, для повторной попытки. Ошибка: " +

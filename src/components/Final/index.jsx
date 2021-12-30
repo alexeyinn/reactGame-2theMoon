@@ -11,34 +11,30 @@ function Final() {
   const { userData } = useSelector(({ user }) => user);
   const { gameScore } = useSelector(({ environment }) => environment);
   const recentScore = +gameScore.match(/\d+/);
+  const newUserData = {
+    userName: userData.userName,
+    hiScore: recentScore,
+    id: userData.id,
+  };
+  const guestUserData = {
+    userName: "Гость",
+    hiScore: recentScore,
+    id: null,
+  };
 
-  if (userData.id !== null) {
-    if (recentScore > userData.hiScore) {
-      dispatch(
-        setUserData({
-          userName: userData.userName,
-          hiScore: recentScore,
-          id: userData.id,
-        })
-      );
-      axios.put(
-        "https://61cb6604194ffe0017788d3a.mockapi.io/users/" + userData.id,
-        {
-          hiScore: recentScore,
-        }
-      );
-    }
-  } else {
-    if (recentScore > userData.hiScore)
-      dispatch(
-        setUserData({
-          userName: "Гость",
-          hiScore: recentScore,
-          id: null,
-        })
-      );
+  if (userData.id !== null && recentScore > userData.hiScore) {
+    dispatch(setUserData(newUserData));
+    sessionStorage.setItem("user", JSON.stringify(newUserData));
+    axios.put(
+      "https://61cb6604194ffe0017788d3a.mockapi.io/users/" + userData.id,
+      {
+        hiScore: recentScore,
+      }
+    );
+  } else if (recentScore > userData.hiScore) {
+    dispatch(setUserData(guestUserData));
+    sessionStorage.setItem("user", JSON.stringify(guestUserData));
   }
-  console.log("render");
 
   return (
     <ul className="finalBlock">
