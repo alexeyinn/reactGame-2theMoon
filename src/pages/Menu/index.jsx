@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import "./style.scss";
 
 function Menu() {
-  const { userName, hiScore } = useSelector(({ user }) => user);
+  const { userData } = useSelector(({ user }) => user);
 
   return (
     <>
@@ -17,8 +17,8 @@ function Menu() {
           <li>Как играть?</li>
         </ul>
       </div>
-      <p className="menuUi userName">{userName}</p>
-      <p className="menuUi hiScore">Лучший результат - {hiScore}</p>
+      <p className="menuUi userName">{userData.userName}</p>
+      <p className="menuUi hiScore">Лучший результат - {userData.hiScore}</p>
     </>
   );
 }

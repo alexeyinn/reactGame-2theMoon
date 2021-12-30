@@ -3,12 +3,7 @@ export const setInput = (inputData) => ({
   payload: inputData,
 });
 
-export const setUserName = (name) => ({
-  type: "SET_USER_NAME",
-  payload: name,
-});
-
-export const setHiScore = (score) => ({
-  type: "SET_HI_SCORE",
-  payload: score,
+export const setUserData = (userDataFromBack) => ({
+  type: "SET_USER_DATA",
+  payload: userDataFromBack,
 });

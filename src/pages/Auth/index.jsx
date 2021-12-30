@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { setHiScore, setInput, setUserName } from "../../redux/actions/user";
+import { setInput, setUserData } from "../../redux/actions/user";
 
 import "./style.scss";
 
@@ -18,21 +18,23 @@ function Auth() {
 
   const onAuth = async () => {
     try {
-      if (inputData !== false) {
+      const getUserObj = async () => {
         let { data } = await axios.get(
           "https://61cb6604194ffe0017788d3a.mockapi.io/users"
         );
-        let logInBefore = data.find((item) => item.userName === inputData);
-        if (logInBefore === undefined) {
-          axios.post("https://61cb6604194ffe0017788d3a.mockapi.io/users", {
-            userName: inputData,
-            hiScore: 0,
-          });
-          dispatch(setUserName(inputData));
-        } else {
-          dispatch(setUserName(inputData));
-          dispatch(setHiScore(logInBefore.hiScore));
-        }
+        return data.find((item) => item.userName === inputData);
+      };
+
+      let logInBefore = await getUserObj();
+
+      if (logInBefore === undefined) {
+        await axios.post("https://61cb6604194ffe0017788d3a.mockapi.io/users", {
+          userName: inputData,
+          hiScore: 0,
+        });
+        dispatch(setUserData(await getUserObj()));
+      } else {
+        dispatch(setUserData(logInBefore));
       }
     } catch (error) {
       alert(

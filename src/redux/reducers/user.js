@@ -1,7 +1,10 @@
 const initialState = {
   inputData: "",
-  userName: "Гость",
-  hiScore: 0,
+  userData: {
+    userName: "Гость",
+    hiScore: 0,
+    id: null,
+  },
 };
 
 const user = (state = initialState, action) => {
@@ -13,17 +16,10 @@ const user = (state = initialState, action) => {
       };
     }
 
-    case "SET_USER_NAME": {
+    case "SET_USER_DATA": {
       return {
         ...state,
-        userName: action.payload,
-      };
-    }
-
-    case "SET_HI_SCORE": {
-      return {
-        ...state,
-        hiScore: action.payload,
+        userData: action.payload,
       };
     }
 
