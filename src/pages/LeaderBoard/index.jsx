@@ -1,20 +1,31 @@
+import axios from "axios";
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { setUserData } from "../../redux/actions/user";
+import { setLeaderBoardList } from "../../redux/actions/environment";
 
 import "./style.scss";
 
 function LeaderBoard() {
   const dispatch = useDispatch();
   const { userData } = useSelector(({ user }) => user);
+  const { leaderBoardList } = useSelector(({ environment }) => environment);
   const savedUser = sessionStorage.user;
+
+  const getUsersList = async () => {
+    let { data } = await axios.get(
+      "https://61cb6604194ffe0017788d3a.mockapi.io/users"
+    );
+    dispatch(setLeaderBoardList(data));
+  };
 
   useEffect(() => {
     if (userData.id === null && savedUser !== undefined) {
       dispatch(setUserData(JSON.parse(savedUser)));
     }
+    if (leaderBoardList.length === 0) getUsersList();
   });
 
   return (
@@ -34,31 +45,13 @@ function LeaderBoard() {
             <th>Имя игрока</th>
             <th>Рекорд</th>
           </tr>
-          <tr>
-            <td>1</td>
-            <td>name</td>
-            <td>50000</td>
-          </tr>
-          <tr>
-            <td>2</td>
-            <td>name2</td>
-            <td>45000</td>
-          </tr>
-          <tr>
-            <td>3</td>
-            <td>name3</td>
-            <td>40000</td>
-          </tr>
-          <tr>
-            <td>4</td>
-            <td>name4</td>
-            <td>35000</td>
-          </tr>
-          <tr>
-            <td>5</td>
-            <td>name5</td>
-            <td>30000</td>
-          </tr>
+          {leaderBoardList.map((item, index) => (
+            <tr>
+              <td>{index + 1}</td>
+              <td>{item.userName}</td>
+              <td>{item.hiScore}</td>
+            </tr>
+          ))}
         </table>
       </div>
       <p className="menuUi userName">{userData.userName}</p>

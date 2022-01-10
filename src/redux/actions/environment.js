@@ -24,3 +24,8 @@ export const setGameOver = (isFall) => ({
   type: "SET_GAME_OVER",
   payload: isFall,
 });
+
+export const setLeaderBoardList = (playersList) => ({
+  type: "SET_LEADER_BOARD",
+  payload: playersList,
+});

@@ -6,6 +6,7 @@ const initialState = {
   soundVolumeLvl: 1,
   musicVolumeLvl: 0.2,
   gameOver: false,
+  leaderBoardList: [],
 };
 
 const getRandomInt = (range) => {
@@ -86,6 +87,17 @@ const environment = (state = initialState, action) => {
       return {
         ...state,
         gameOver: action.payload,
+      };
+    }
+
+    case "SET_LEADER_BOARD": {
+      let listForRender = action.payload
+        .sort((a, b) => b.hiScore - a.hiScore)
+        .slice(0, 5);
+
+      return {
+        ...state,
+        leaderBoardList: listForRender,
       };
     }
 
