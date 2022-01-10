@@ -20,11 +20,13 @@ function Menu() {
   return (
     <>
       <div className="menuBlock">
-        <ul>
+        <ul className="menuButtons">
           <li>
             <Link to="/game">Начать!</Link>
           </li>
-          <li>Таблица лидеров</li>
+          <li>
+            <Link to="/leader-board">Таблица лидеров</Link>
+          </li>
           <li>Как играть?</li>
         </ul>
       </div>

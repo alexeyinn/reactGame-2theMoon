@@ -1,0 +1,29 @@
+.menuBlock {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+
+  .leaderBlockBtn {
+    display: flex;
+    justify-content: space-around;
+    font-size: 30px;
+
+    li {
+      padding: 20px;
+
+      li:first-child {
+        margin-right: 190px;
+
+        &:hover {
+          transform: translateY(-5px);
+          box-shadow: 1px 1px 20px 5px #000000;
+        }
+      }
+    }
+  }
+
+  td {
+    text-align: center;
+    padding: 20px;
+  }
+}

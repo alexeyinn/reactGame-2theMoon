@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 
 import { setPlatformCount, setGameOver } from "../../redux/actions/environment";
+import { setUserData } from "../../redux/actions/user";
 
 import { Platform, Doge, Coin, Final } from "../../components";
 
@@ -37,6 +38,9 @@ function Game(props) {
   const { coinsCount } = useSelector(({ coins }) => coins);
   // --- Рендер основных элементов UI
   useEffect(() => {
+    if (sessionStorage.user !== undefined) {
+      dispatch(setUserData(JSON.parse(sessionStorage.user)));
+    }
     dogeRef.current = document.querySelector(".doge");
     startCoins(dispatch);
     movePlatforms(dispatch);

@@ -48,7 +48,7 @@ function Auth() {
 
   return (
     <div className="authBlock">
-      <ul>
+      <ul className="menuButtons">
         <input
           placeholder="Введите имя/ник"
           spellCheck="false"

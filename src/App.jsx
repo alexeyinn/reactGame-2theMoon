@@ -4,7 +4,7 @@ import { Route, Routes } from "react-router-dom";
 import useSound from "use-sound";
 
 import { Stars } from "./components";
-import { Title, Game, Auth, Menu } from "./pages/index";
+import { Title, Game, Auth, Menu, LeaderBoard } from "./pages/index";
 
 import { setSoundIsEnable } from "./redux/actions/environment";
 
@@ -45,6 +45,7 @@ function App() {
         />
         <Route path="/auth" exact element={<Auth />} />
         <Route path="/menu" exact element={<Menu />} />
+        <Route path="/leader-board" exact element={<LeaderBoard />} />
         <Route path="/game" exact element={<Game stopMusic={stop} />} />
       </Routes>
       <img
