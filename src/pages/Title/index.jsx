@@ -7,31 +7,23 @@ function Title(props) {
     <div className="title">
       <img className="titleLogo" src="img/coins/shiba.svg" alt="title logo" />
       <ul>
-        <li>
-          <a
-            href="https://github.com/alexeyinn/reactGame-2theMoon"
-            target="_blank"
-            rel="noreferrer"
-          >
-            <img src="img/github.svg" alt="github logo" />
-          </a>
-        </li>
-
-        <li>
-          <Link to="/auth">
-            <img
-              onClick={props.startMusic}
-              src="img/toTheMoon.jpg"
-              alt="to the moon logo"
-            />
-          </Link>
-        </li>
-
-        <li>
-          <a href="https://t.me/alexeyinn" target="_blank" rel="noreferrer">
-            <img src="img/telegram.svg" alt="telegram logo" />
-          </a>
-        </li>
+        <a
+          href="https://github.com/alexeyinn/reactGame-2theMoon"
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img src="img/github.svg" alt="github logo" />
+        </a>
+        <Link to="/auth">
+          <img
+            onClick={props.startMusic}
+            src="img/toTheMoon.jpg"
+            alt="to the moon logo"
+          />
+        </Link>
+        <a href="https://t.me/alexeyinn" target="_blank" rel="noreferrer">
+          <img src="img/telegram.svg" alt="telegram logo" />
+        </a>
       </ul>
     </div>
   );

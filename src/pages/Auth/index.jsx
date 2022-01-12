@@ -52,22 +52,20 @@ function Auth() {
         <input
           placeholder="Введите имя/ник"
           spellCheck="false"
-          maxLength="10"
+          maxLength="9"
           onChange={onInput}
           value={inputData}
         ></input>
-        <li>
-          {inputData ? (
-            <Link to="/menu" onClick={onAuth}>
-              Играть как: {inputData}{" "}
-            </Link>
-          ) : (
-            "...или..."
-          )}
-        </li>
-        <li>
-          <Link to="/menu">Войти как "Гость"</Link>
-        </li>
+        {inputData ? (
+          <Link to="/menu" onClick={onAuth}>
+            <li>Играть как: {inputData} </li>
+          </Link>
+        ) : (
+          "...или..."
+        )}
+        <Link to="/menu">
+          <li>Войти как "Гость"</li>
+        </Link>
       </ul>
     </div>
   );

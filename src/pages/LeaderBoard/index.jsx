@@ -32,12 +32,12 @@ function LeaderBoard() {
     <>
       <div className="menuBlock">
         <ul className="leaderBlockBtn">
-          <li>
-            <Link to="/menu">Назад</Link>
-          </li>
-          <li>
-            <Link to="/game">Играть!</Link>
-          </li>
+          <Link to="/menu">
+            <li>Назад</li>
+          </Link>
+          <Link to="/game">
+            <li>Играть!</li>
+          </Link>
         </ul>
         <table>
           <tr>

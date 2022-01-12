@@ -64,12 +64,24 @@ code {
   width: 6vw;
 }
 
-a {
-  text-decoration: none;
-  color: #ffd700;
+li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+  border-color: #000000;
+  border-width: 2px;
+  width: 528px;
+  height: 56px;
 
   &:hover {
     transform: translateY(-5px);
-    box-shadow: 1px 1px 20px 5px #000000;
+    box-shadow: 1px 1px 7px 5px #000000;
+    background-color: #523519;
   }
+}
+
+a {
+  text-decoration: none;
+  color: #ffd700;
 }

@@ -38,16 +38,16 @@ function Final() {
 
   return (
     <ul className="finalBlock">
-      <li>Игра окончена!</li>
-      <li>Сыграть еще?</li>
+      <p>Игра окончена!</p>
+      <p>Сыграть еще?</p>
       <ul className="finalBtn">
         <li onClick={() => window.location.reload()}>Да!</li>
-        <li>
-          {/* Ссылку ниже, не переделывать под роутинг!
+        {/* Ссылку ниже, не переделывать под роутинг!
           потащит все тяжелые формулы и проверки за собой
           и игра упадет */}
-          <a href="/menu">В меню!</a>
-        </li>
+        <a href="/menu">
+          <li>В меню!</li>
+        </a>
       </ul>
     </ul>
   );
