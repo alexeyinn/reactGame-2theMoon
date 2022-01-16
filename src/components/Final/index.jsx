@@ -2,9 +2,9 @@ import React from "react";
 import axios from "axios";
 
 import { useSelector, useDispatch } from "react-redux";
+import { setUserData } from "../../redux/actions/user";
 
 import "./style.scss";
-import { setUserData } from "../../redux/actions/user";
 
 function Final() {
   const dispatch = useDispatch();

@@ -12,3 +12,7 @@ export const setJumpCount = (numberOfJump) => ({
   type: "SET_JUMP_COUNT",
   payload: numberOfJump,
 });
+
+export const setSteps = () => ({
+  type: "SET_STEPS",
+});

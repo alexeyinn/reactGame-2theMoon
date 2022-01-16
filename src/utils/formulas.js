@@ -54,11 +54,11 @@ export const newPlatformGen = (dispatch) => {
   }
 };
 
-// --- Через 18 сек после старта, двигаем платформы
+// --- Через 3 сек после старта, двигаем платформы
 export const movePlatforms = (dispatch) => {
   setInterval(() => {
     newPlatformGen(dispatch, setPlatformCount);
-  }, 5000);
+  }, 3000);
 };
 
 // --- Генерация новых монет в начале игры

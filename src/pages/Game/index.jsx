@@ -89,7 +89,7 @@ function Game(props) {
       }, 325);
     }
 
-    if (dogeRef.current.getBoundingClientRect().top >= 960) {
+    if (dogeRef.current.getBoundingClientRect().top >= 900) {
       dispatch(setJumpCount(2));
       dispatch(setGameOver(true));
     } else {
