@@ -1,14 +1,16 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, Routes, Route } from "react-router-dom";
+import { Top5 } from "../../components";
 
 import { setUserData } from "../../redux/actions/user";
 
 import "./style.scss";
 
-function Menu() {
+function PreGame() {
   const dispatch = useDispatch();
   const { userData } = useSelector(({ user }) => user);
+
   const savedUser = sessionStorage.user;
 
   useEffect(() => {
@@ -20,17 +22,17 @@ function Menu() {
   return (
     <>
       <div className="menuBlock">
-        <ul className="menuButtons">
+        <ul className="leaderBlockBtn">
+          <Link to="/menu">
+            <li>Назад</li>
+          </Link>
           <Link to="/game">
-            <li>Начать!</li>
-          </Link>
-          <Link to="/pregame/top5">
-            <li>ТОП-5 игроков</li>
-          </Link>
-          <Link to="/pregame/howtoplay">
-            <li>Как играть?</li>
+            <li>Играть!</li>
           </Link>
         </ul>
+        <Routes>
+          <Route path="/top5" element={<Top5 />} />
+        </Routes>
       </div>
       <p className="menuUi userName">{userData.userName}</p>
       <p className="menuUi hiScore">
@@ -40,4 +42,4 @@ function Menu() {
   );
 }
 
-export default Menu;
+export default PreGame;
