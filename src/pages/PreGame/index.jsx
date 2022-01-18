@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { Link, Routes, Route } from "react-router-dom";
-import { Top5 } from "../../components";
+import { Top5, HowToPlay } from "../../components";
 
 import { setUserData } from "../../redux/actions/user";
 
@@ -32,6 +32,7 @@ function PreGame() {
         </ul>
         <Routes>
           <Route path="/top5" element={<Top5 />} />
+          <Route path="/howtoplay" element={<HowToPlay />} />
         </Routes>
       </div>
       <p className="menuUi userName">{userData.userName}</p>

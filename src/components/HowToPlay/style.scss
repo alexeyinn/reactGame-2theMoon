@@ -1,0 +1,11 @@
+.menuBlock {
+  align-items: center;
+
+  #carouselExampleCaptions {
+    border: solid;
+
+    .carousel-caption {
+      padding-bottom: unset;
+    }
+  }
+}

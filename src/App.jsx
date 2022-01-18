@@ -10,8 +10,6 @@ import { setSoundIsEnable } from "./redux/actions/environment";
 
 import { renderStars } from "./utils/formulas";
 
-import musicOn from "./assets/img/music.svg";
-import musicOff from "./assets/img/musicOff.svg";
 import shibaInu from "../src/assets/sounds/shibaInu.mp3";
 
 function App() {
@@ -55,7 +53,7 @@ function App() {
       <img
         onClick={() => dispatch(setSoundIsEnable())}
         className="sound"
-        src={musicVolumeLvl ? musicOn : musicOff}
+        src={`/img/music${musicVolumeLvl ? "" : "Off"}.svg`}
         alt="sound"
       />
     </div>

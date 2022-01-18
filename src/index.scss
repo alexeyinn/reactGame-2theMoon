@@ -84,4 +84,8 @@ li {
 a {
   text-decoration: none;
   color: #ffd700;
+
+  &:hover {
+    color: #ffd700;
+  }
 }

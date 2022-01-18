@@ -1,5 +1,10 @@
 table {
-  padding-top: 20px;
+  width: -webkit-fill-available;
+  border-collapse: unset;
+
+  th {
+    text-align: center;
+  }
 
   td {
     text-align: center;
