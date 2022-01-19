@@ -26,7 +26,7 @@ const Coin = React.memo(function Coin(props) {
       id={props.id}
       className="coin flying"
       style={coinStyle}
-      src={`img/coins/${coinsType[getRandomInt()]}.svg`}
+      src={`/img/coins/${coinsType[getRandomInt()]}.svg`}
       alt="coin"
     />
   );

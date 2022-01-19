@@ -9,7 +9,7 @@ function Platform(props) {
     <img
       style={platformStyle}
       className="platform flying"
-      src="img/platform.svg"
+      src="/img/platform.svg"
       alt="platform"
     />
   );

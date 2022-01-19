@@ -3,6 +3,7 @@ import {
   setPlatformCount,
   setGameScore,
   setGameIsStarts,
+  setGameOver,
 } from "../redux/actions/environment";
 import {
   setOnPlatform,
@@ -25,9 +26,7 @@ export const onJump = (
   }
 
   if (jumpCount <= 1) {
-    dispatch(
-      setDogePosition([getComputedStyle(dogeElem.current).bottom, 400, 1])
-    );
+    dispatch(setDogePosition([getComputedStyle(dogeElem).bottom, 400, 1]));
     dispatch(setOnPlatform(false));
     setTimeout(() => {
       dispatch(setDogePosition({}));
@@ -80,13 +79,13 @@ export const checkOnPlatform = (
   dispatch,
   onPlatformRef
 ) => {
-  dogePosition.current = dogeElem.current.getBoundingClientRect();
-  platformPosition.current = platformBorder.getBoundingClientRect();
-  let doge = dogePosition.current;
-  let platform = platformPosition.current;
+  dogePosition = dogeElem.getBoundingClientRect();
+  platformPosition = platformBorder.getBoundingClientRect();
+  let doge = dogePosition;
+  let platform = platformPosition;
 
   if (
-    Object.keys(inJump.current).length === 0 &&
+    Object.keys(inJump).length === 0 &&
     platform.left <= doge.right &&
     (doge.right <= platform.right || doge.left <= platform.right) &&
     doge.bottom >= platform.top &&
@@ -99,9 +98,9 @@ export const checkOnPlatform = (
     );
     dispatch(setJumpCount(0));
   } else if (
-    inJump.current.bottom === undefined &&
+    inJump.bottom === undefined &&
     doge.left < platform.right &&
-    onPlatformRef.current === false &&
+    onPlatformRef === false &&
     platform.left <= doge.right &&
     doge.bottom >= platform.top &&
     doge.bottom <= platform.top + 30
@@ -113,8 +112,8 @@ export const checkOnPlatform = (
     dispatch(setOnPlatform(true));
     dispatch(setJumpCount(0));
   } else if (
-    onPlatformRef.current === true &&
-    inJump.current.bottom !== undefined &&
+    onPlatformRef === true &&
+    inJump.bottom !== undefined &&
     doge.left > platform.right &&
     doge.bottom <= platform.bottom
   ) {
@@ -136,12 +135,15 @@ export const checkOnCoin = (
   gameIsStarts
 ) => {
   if (gameIsStarts === true) {
-    dogePosition.current = dogeElem.current.getBoundingClientRect();
-    coinPosition.current = coinBorder.getBoundingClientRect();
-    let doge = dogePosition.current;
-    let coin = coinPosition.current;
+    dogePosition = dogeElem.getBoundingClientRect();
+    coinPosition = coinBorder.getBoundingClientRect();
+    let doge = dogePosition;
+    let coin = coinPosition;
 
-    if (
+    if (doge.top >= 900) {
+      dispatch(setJumpCount(2));
+      dispatch(setGameOver(true));
+    } else if (
       doge.right >= coin.left &&
       (coin.bottom >= doge.bottom || coin.bottom + 145 >= doge.bottom) &&
       (coin.right >= doge.right || coin.right + 145 >= doge.right) &&

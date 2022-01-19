@@ -2,7 +2,7 @@ import { useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 
-import { setPlatformCount, setGameOver } from "../../redux/actions/environment";
+import { setPlatformCount } from "../../redux/actions/environment";
 import { setUserData } from "../../redux/actions/user";
 
 import { Platform, Doge, Coin, Final } from "../../components";
@@ -20,7 +20,6 @@ import nyanDogMain from "../../assets/sounds/nyanDogMain.mp3";
 import coinPick from "../../assets/sounds/coinPick.mp3";
 
 import "./style.scss";
-import { setJumpCount } from "../../redux/actions/doge";
 
 function Game(props) {
   const dispatch = useDispatch();
@@ -49,6 +48,17 @@ function Game(props) {
   useEffect(() => {
     props.stopMusic();
   }, [props]);
+
+  useEffect(() => {
+    if (platformCount.length <= 5) {
+      setTimeout(() => {
+        dispatch(setPlatformCount([]));
+        // Строки ниже, поменять местами,
+        // для замедления игры в полтора раза
+        // }, 500);
+      }, 325);
+    }
+  }, [dispatch, platformCount]);
 
   const [nyanDogBegin] = useSound(nyanDogStarts, {
     volume: musicVolumeLvl,
@@ -80,36 +90,22 @@ function Game(props) {
   let coinPositionRef = useRef();
 
   useEffect(() => {
-    if (platformCount.length <= 5) {
-      setTimeout(() => {
-        dispatch(setPlatformCount([]));
-        // Строки ниже, поменять местами,
-        // для замедления игры в полтора раза
-        // }, 500);
-      }, 325);
-    }
-
-    if (dogeRef.current.getBoundingClientRect().top >= 900) {
-      dispatch(setJumpCount(2));
-      dispatch(setGameOver(true));
-    } else {
-      platformRef.current = document.querySelectorAll(".platform");
-      platformRef.current.forEach((item) =>
-        setInterval(
-          () =>
-            checkOnPlatform(
-              dogePositionRef,
-              dogeRef,
-              platformPositionRef,
-              item,
-              inJump,
-              dispatch,
-              onPlatformRef
-            ),
-          5
-        )
-      );
-    }
+    platformRef.current = document.querySelectorAll(".platform");
+    platformRef.current.forEach((item) =>
+      setInterval(
+        () =>
+          checkOnPlatform(
+            dogePositionRef.current,
+            dogeRef.current,
+            platformPositionRef.current,
+            item,
+            inJump.current,
+            dispatch,
+            onPlatformRef.current
+          ),
+        5
+      )
+    );
   }, [dispatch, platformCount, platformRef]);
 
   useEffect(() => {
@@ -118,9 +114,9 @@ function Game(props) {
       setInterval(
         () =>
           checkOnCoin(
-            dogePositionRef,
-            dogeRef,
-            coinPositionRef,
+            dogePositionRef.current,
+            dogeRef.current,
+            coinPositionRef.current,
             item,
             dispatch,
             coinCollected,
@@ -136,7 +132,7 @@ function Game(props) {
       onClick={() =>
         onJump(
           dispatch,
-          dogeRef,
+          dogeRef.current,
           gameIsStarts,
           startsBackgroundMusic,
           jumpCount

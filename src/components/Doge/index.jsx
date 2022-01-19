@@ -22,7 +22,7 @@ function Doge() {
     <img
       style={gameIsStarts ? dogePosition : startPositionStyle}
       className={"doge"}
-      src={`img/doge/${onPlatform ? (steps ? `step` : `byStep`) : `jump`}.svg`}
+      src={`/img/doge/${onPlatform ? (steps ? `step` : `byStep`) : `jump`}.svg`}
       alt="doge"
     />
   );

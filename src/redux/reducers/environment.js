@@ -62,20 +62,8 @@ const environment = (state = initialState, action) => {
     }
 
     case "SET_GAME_SCORE": {
-      let newCount;
       let newScore = +state.gameScore.match(/\d+/) + action.payload;
-      let newScoreInStr = newScore.toString();
-      let emptySlots = 7 - newScoreInStr.length;
-
-      if (emptySlots === 3) {
-        newCount = "$000" + newScoreInStr;
-      } else if (emptySlots === 2) {
-        newCount = "$00" + newScoreInStr;
-      } else if (emptySlots === 1) {
-        newCount = "$0" + newScoreInStr;
-      } else {
-        newCount = "$" + newScoreInStr;
-      }
+      let newCount = "$" + newScore.toString().padStart(7, "0");
 
       return {
         ...state,

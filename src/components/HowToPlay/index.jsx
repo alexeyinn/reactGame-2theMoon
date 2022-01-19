@@ -43,35 +43,55 @@ function HowToPlay() {
       </div>
       <div class="carousel-inner">
         <div class="carousel-item active">
-          <img src={"/img/howToPlay/1.png"} class="d-block w-100" alt="..." />
+          <img
+            src={"/img/howToPlay/1.png"}
+            class="d-block w-100"
+            alt="How to play slide1"
+          />
           <div class="carousel-caption d-none d-md-block">
             <h5>Чтобы начать игру,</h5>
             <p>нажми "Левую кнопку мыши" и соверши свой первый прожок!</p>
           </div>
         </div>
         <div class="carousel-item">
-          <img src={"/img/howToPlay/2.png"} class="d-block w-100" alt="..." />
+          <img
+            src={"/img/howToPlay/2.png"}
+            class="d-block w-100"
+            alt="How to play slide2"
+          />
           <div class="carousel-caption d-none d-md-block">
             <h5>Увеличивай свою капитализацию!</h5>
             <p>Прыгай по платформам и поглащай другие монеты!</p>
           </div>
         </div>
         <div class="carousel-item">
-          <img src={"/img/howToPlay/3.png"} class="d-block w-100" alt="..." />
+          <img
+            src={"/img/howToPlay/3.png"}
+            class="d-block w-100"
+            alt="How to play slide3"
+          />
           <div class="carousel-caption d-none d-md-block">
             <h5>Стремись к первому месту на рынке!</h5>
             <p>И двигайся по таблице лидеров!</p>
           </div>
         </div>
         <div class="carousel-item">
-          <img src={"/img/howToPlay/4.png"} class="d-block w-100" alt="..." />
+          <img
+            src={"/img/howToPlay/4.png"}
+            class="d-block w-100"
+            alt="How to play slide4"
+          />
           <div class="carousel-caption d-none d-md-block">
             <h5>Падаешь?</h5>
             <p>Используй двойной прыжок во время снижения!</p>
           </div>
         </div>
         <div class="carousel-item">
-          <img src={"/img/howToPlay/5.png"} class="d-block w-100" alt="..." />
+          <img
+            src={"/img/howToPlay/5.png"}
+            class="d-block w-100"
+            alt="How to play slide5"
+          />
           <div class="carousel-caption d-none d-md-block">
             <h5>Надоела музыка?</h5>
             <p>Можешь отключить ее в правом верхнем углу!</p>
