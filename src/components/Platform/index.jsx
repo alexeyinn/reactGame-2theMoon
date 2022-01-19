@@ -1,6 +1,8 @@
+import React from "react";
+
 import "./style.scss";
 
-function Platform(props) {
+const Platform = React.memo(function Platform(props) {
   let platformStyle = {
     top: props.position + "vh",
   };
@@ -13,6 +15,6 @@ function Platform(props) {
       alt="platform"
     />
   );
-}
+});
 
 export default Platform;

@@ -132,7 +132,8 @@ export const checkOnCoin = (
   coinBorder,
   dispatch,
   coinCollected,
-  gameIsStarts
+  gameIsStarts,
+  gameOver
 ) => {
   if (gameIsStarts === true) {
     dogePosition = dogeElem.getBoundingClientRect();
@@ -140,7 +141,7 @@ export const checkOnCoin = (
     let doge = dogePosition;
     let coin = coinPosition;
 
-    if (doge.top >= 900) {
+    if (gameOver === false && doge.top >= 900) {
       dispatch(setJumpCount(2));
       dispatch(setGameOver(true));
     } else if (

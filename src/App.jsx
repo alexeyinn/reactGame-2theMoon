@@ -29,8 +29,7 @@ function App() {
   useEffect(() => {
     renderStars(dispatch);
   }, [dispatch]);
-  //TODO
-  // При возвращении в меню, включать музыку
+
   return (
     <div className="App">
       {starsCount.map((item, index) => (
@@ -44,10 +43,7 @@ function App() {
         />
         <Route path="/auth" exact element={<Auth />} />
         <Route path="/menu" exact element={<Menu />} />
-        <Route path="/pregame" element={<PreGame />}>
-          <Route path="top5" />
-          <Route path="howtoplay" />
-        </Route>
+        <Route path="/pregame/*" element={<PreGame />} />
         <Route path="/game" element={<Game stopMusic={stop} />} />
       </Routes>
       <img

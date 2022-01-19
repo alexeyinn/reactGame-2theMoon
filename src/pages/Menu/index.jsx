@@ -15,7 +15,7 @@ function Menu() {
     if (userData.id === null && savedUser !== undefined) {
       dispatch(setUserData(JSON.parse(savedUser)));
     }
-  });
+  }, [dispatch, savedUser, userData.id]);
 
   return (
     <>

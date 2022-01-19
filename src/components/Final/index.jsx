@@ -6,7 +6,7 @@ import { setUserData } from "../../redux/actions/user";
 
 import "./style.scss";
 
-function Final() {
+const Final = React.memo(function Final() {
   const dispatch = useDispatch();
   const { userData } = useSelector(({ user }) => user);
   const { gameScore } = useSelector(({ environment }) => environment);
@@ -51,6 +51,6 @@ function Final() {
       </ul>
     </ul>
   );
-}
+});
 
 export default Final;

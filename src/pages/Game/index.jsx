@@ -46,10 +46,6 @@ function Game(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    props.stopMusic();
-  }, [props]);
-
-  useEffect(() => {
     if (platformCount.length <= 5) {
       setTimeout(() => {
         dispatch(setPlatformCount([]));
@@ -59,6 +55,10 @@ function Game(props) {
       }, 325);
     }
   }, [dispatch, platformCount]);
+
+  useEffect(() => {
+    props.stopMusic();
+  }, [props]);
 
   const [nyanDogBegin] = useSound(nyanDogStarts, {
     volume: musicVolumeLvl,
@@ -88,6 +88,8 @@ function Game(props) {
   onPlatformRef.current = onPlatform;
   let coinRef = useRef();
   let coinPositionRef = useRef();
+  let gameOverRef = useRef();
+  gameOverRef.current = gameOver;
 
   useEffect(() => {
     platformRef.current = document.querySelectorAll(".platform");
@@ -103,7 +105,7 @@ function Game(props) {
             dispatch,
             onPlatformRef.current
           ),
-        5
+        20
       )
     );
   }, [dispatch, platformCount, platformRef]);
@@ -120,12 +122,20 @@ function Game(props) {
             item,
             dispatch,
             coinCollected,
-            gameIsStarts
+            gameIsStarts,
+            gameOverRef.current
           ),
         650
       )
     );
-  }, [dispatch, coinsCount, dogePosition, coinCollected, gameIsStarts]);
+  }, [
+    dispatch,
+    coinsCount,
+    dogePosition,
+    coinCollected,
+    gameIsStarts,
+    gameOver,
+  ]);
 
   return (
     <div
