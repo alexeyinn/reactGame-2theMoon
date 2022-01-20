@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/reactGame-2theMoon/static/css/main.7312f5e5.chunk.css",
-    "main.js": "/reactGame-2theMoon/static/js/main.9f9d753a.chunk.js",
-    "main.js.map": "/reactGame-2theMoon/static/js/main.9f9d753a.chunk.js.map",
+    "main.js": "/reactGame-2theMoon/static/js/main.6b53b551.chunk.js",
+    "main.js.map": "/reactGame-2theMoon/static/js/main.6b53b551.chunk.js.map",
     "runtime-main.js": "/reactGame-2theMoon/static/js/runtime-main.2da12db0.js",
     "runtime-main.js.map": "/reactGame-2theMoon/static/js/runtime-main.2da12db0.js.map",
     "static/js/2.2e080937.chunk.js": "/reactGame-2theMoon/static/js/2.2e080937.chunk.js",
@@ -16,12 +16,13 @@
     "static/media/coinPick.79891fa1.mp3": "/reactGame-2theMoon/static/media/coinPick.79891fa1.mp3",
     "static/media/nyanDogMain.b68504e5.mp3": "/reactGame-2theMoon/static/media/nyanDogMain.b68504e5.mp3",
     "static/media/nyanDogStarts.0ec547b6.mp3": "/reactGame-2theMoon/static/media/nyanDogStarts.0ec547b6.mp3",
+    "static/media/shiba.af4339fe.svg": "/reactGame-2theMoon/static/media/shiba.af4339fe.svg",
     "static/media/shibaInu.ba0410d0.mp3": "/reactGame-2theMoon/static/media/shibaInu.ba0410d0.mp3"
   },
   "entrypoints": [
     "static/js/runtime-main.2da12db0.js",
     "static/js/2.2e080937.chunk.js",
     "static/css/main.7312f5e5.chunk.css",
-    "static/js/main.9f9d753a.chunk.js"
+    "static/js/main.6b53b551.chunk.js"
   ]
 }
