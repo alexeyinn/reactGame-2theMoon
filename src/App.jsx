@@ -10,6 +10,8 @@ import { setSoundIsEnable } from "./redux/actions/environment";
 
 import { renderStars } from "./utils/formulas";
 
+import musicOnIco from "./assets/img/musicIco/musicOn.svg";
+import musicOffIco from "./assets/img/musicIco/musicOff.svg";
 import shibaInu from "../src/assets/sounds/shibaInu.mp3";
 
 function App() {
@@ -37,7 +39,7 @@ function App() {
       ))}
       <Routes>
         <Route
-          path=""
+          path="/"
           exact
           element={<Title startMusic={startBackgroundMusic} />}
         />
@@ -49,7 +51,7 @@ function App() {
       <img
         onClick={() => dispatch(setSoundIsEnable())}
         className="sound"
-        src={`/img/music${musicVolumeLvl ? "" : "Off"}.svg`}
+        src={musicVolumeLvl ? musicOnIco : musicOffIco}
         alt="sound"
       />
     </div>

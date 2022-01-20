@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./style.scss";
+import platformImg from "../../assets/img/platform.svg";
 
 const Platform = React.memo(function Platform(props) {
   let platformStyle = {
@@ -11,7 +12,7 @@ const Platform = React.memo(function Platform(props) {
     <img
       style={platformStyle}
       className="platform flying"
-      src="/img/platform.svg"
+      src={platformImg}
       alt="platform"
     />
   );

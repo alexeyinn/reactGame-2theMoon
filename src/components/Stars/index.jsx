@@ -1,6 +1,7 @@
 import React from "react";
 
 import "./style.scss";
+import starsImg from "../../assets/img/stars.svg";
 
 const Stars = React.memo((props) => {
   let starsStyle = {
@@ -11,7 +12,7 @@ const Stars = React.memo((props) => {
     <img
       style={starsStyle}
       className="stars flying"
-      src={"/img/stars.svg"}
+      src={starsImg}
       alt="stars"
     />
   );

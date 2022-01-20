@@ -1,4 +1,9 @@
 import "./style.scss";
+import slide1 from "../../assets/img/howToPlay/1.png";
+import slide2 from "../../assets/img/howToPlay/2.png";
+import slide3 from "../../assets/img/howToPlay/3.png";
+import slide4 from "../../assets/img/howToPlay/4.png";
+import slide5 from "../../assets/img/howToPlay/5.png";
 
 function HowToPlay() {
   return (
@@ -44,7 +49,7 @@ function HowToPlay() {
       <div className="carousel-inner">
         <div className="carousel-item active">
           <img
-            src={"/img/howToPlay/1.png"}
+            src={slide1}
             className="d-block w-100"
             alt="How to play slide1"
           />
@@ -55,7 +60,7 @@ function HowToPlay() {
         </div>
         <div className="carousel-item">
           <img
-            src={"/img/howToPlay/2.png"}
+            src={slide2}
             className="d-block w-100"
             alt="How to play slide2"
           />
@@ -66,7 +71,7 @@ function HowToPlay() {
         </div>
         <div className="carousel-item">
           <img
-            src={"/img/howToPlay/3.png"}
+            src={slide3}
             className="d-block w-100"
             alt="How to play slide3"
           />
@@ -77,7 +82,7 @@ function HowToPlay() {
         </div>
         <div className="carousel-item">
           <img
-            src={"/img/howToPlay/4.png"}
+            src={slide4}
             className="d-block w-100"
             alt="How to play slide4"
           />
@@ -88,7 +93,7 @@ function HowToPlay() {
         </div>
         <div className="carousel-item">
           <img
-            src={"/img/howToPlay/5.png"}
+            src={slide5}
             className="d-block w-100"
             alt="How to play slide5"
           />

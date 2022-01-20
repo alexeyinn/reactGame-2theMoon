@@ -45,7 +45,7 @@ const Final = React.memo(function Final() {
         {/* Ссылку ниже, не переделывать под роутинг!
           потащит все тяжелые формулы и проверки за собой
           и игра упадет */}
-        <a href="/menu">
+        <a href="/reactGame-2theMoon/menu">
           <li>В меню!</li>
         </a>
       </ul>

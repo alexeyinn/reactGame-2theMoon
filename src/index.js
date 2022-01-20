@@ -11,7 +11,7 @@ import "./index.scss";
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
-      <Router>
+      <Router basename="/reactGame-2theMoon">
         <App />
       </Router>
     </Provider>

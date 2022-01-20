@@ -4,6 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { setSteps } from "../../redux/actions/doge";
 
 import "./style.scss";
+import dogeStepAvatar from "../../assets/img/doge/step.svg";
+import dogeByStepAvatar from "../../assets/img/doge/byStep.svg";
+import dogeInJumpAvatar from "../../assets/img/doge/jump.svg";
 
 function Doge() {
   const dispatch = useDispatch();
@@ -22,7 +25,13 @@ function Doge() {
     <img
       style={gameIsStarts ? dogePosition : startPositionStyle}
       className={"doge"}
-      src={`/img/doge/${onPlatform ? (steps ? `step` : `byStep`) : `jump`}.svg`}
+      src={
+        onPlatform
+          ? steps
+            ? dogeStepAvatar
+            : dogeByStepAvatar
+          : dogeInJumpAvatar
+      }
       alt="doge"
     />
   );
