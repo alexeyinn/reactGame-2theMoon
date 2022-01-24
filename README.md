@@ -10,7 +10,7 @@
 - SCSS
 - Bootstrap
 
-Рабочее демо проекта - https://alexeyinn.github.io/reactGame-2theMoon/
+Рабочее демо проекта (лучше всего адаптировано под размер страницы: 1920х920 ) - https://alexeyinn.github.io/reactGame-2theMoon/
 
 Или для запуска проекта локально:
 
