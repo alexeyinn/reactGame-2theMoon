@@ -55,7 +55,10 @@ function HowToPlay() {
           />
           <div className="carousel-caption d-none d-md-block">
             <h5>Чтобы начать игру,</h5>
-            <p>нажми "Левую кнопку мыши" и соверши свой первый прожок!</p>
+            <p>
+              нажми "Левую кнопку мыши" или 'Пробел' на клавиатуре и соверши
+              свой первый прыжок!
+            </p>
           </div>
         </div>
         <div className="carousel-item">
@@ -66,7 +69,7 @@ function HowToPlay() {
           />
           <div className="carousel-caption d-none d-md-block">
             <h5>Увеличивай свою капитализацию!</h5>
-            <p>Прыгай по платформам и поглащай другие монеты!</p>
+            <p>Прыгай по платформам и поглощай другие монеты!</p>
           </div>
         </div>
         <div className="carousel-item">

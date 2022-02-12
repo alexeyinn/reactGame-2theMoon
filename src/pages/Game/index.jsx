@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import useSound from "use-sound";
 
@@ -63,20 +63,20 @@ function Game(props) {
   const [nyanDogBegin] = useSound(nyanDogStarts, {
     volume: musicVolumeLvl,
   });
-  const [nyanDogConttinue] = useSound(nyanDogMain, {
+  const [nyanDogContinue] = useSound(nyanDogMain, {
     volume: musicVolumeLvl,
   });
   const [coinCollected] = useSound(coinPick, {
     volume: soundVolumeLvl,
   });
 
-  const startsBackgroundMusic = () => {
+  const startsBackgroundMusic = useCallback(() => {
     nyanDogBegin();
-    setTimeout(nyanDogConttinue, 33500);
+    setTimeout(nyanDogContinue, 33500);
     setTimeout(() => {
-      setInterval(nyanDogConttinue, 22000);
+      setInterval(nyanDogContinue, 22000);
     }, 33500);
-  };
+  }, [nyanDogBegin, nyanDogContinue]);
 
   let dogeRef = useRef();
   let dogePositionRef = useRef();
@@ -136,6 +136,29 @@ function Game(props) {
     gameIsStarts,
     gameOver,
   ]);
+
+  const doJump = useCallback(
+    (event) => {
+      if (event.code === "Space") {
+        onJump(
+          dispatch,
+          dogeRef.current,
+          gameIsStarts,
+          startsBackgroundMusic,
+          jumpCount
+        );
+      }
+    },
+    [dispatch, gameIsStarts, startsBackgroundMusic, jumpCount]
+  );
+
+  useEffect(() => {
+    document.addEventListener("keydown", doJump);
+
+    return () => {
+      document.removeEventListener("keydown", doJump);
+    };
+  }, [doJump]);
 
   return (
     <div
